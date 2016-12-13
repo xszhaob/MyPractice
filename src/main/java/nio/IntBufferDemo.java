@@ -14,6 +14,13 @@ import java.nio.IntBuffer;
  */
 public class IntBufferDemo {
     public static void main(String[] args) {
+        /*
+        视图缓冲器（view buffer） 可以让我们通过某个特定的基本数据类型的视窗查看其底层的ByteBuffer。
+        ByteBuffer依然是实际存储数据的地方，“支持”着前面的视图，
+        因此，对视图的任何修改都会映射称为对ByteBuffer中数据的修改。
+        视图还允许我们从ByteBuffer一次一个地（与ByteBuffer所支持的方式相同）或成批地（放入数组中）读取
+        基本类型值。
+         */
         ByteBuffer buffer = ByteBuffer.allocate(1024);
         IntBuffer intBuffer = buffer.asIntBuffer();
 
