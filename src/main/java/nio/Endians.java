@@ -12,6 +12,12 @@ import java.util.Arrays;
  * package_name:nio
  * <p/>
  * project: MyPractice
+ * 不同的机器可能会使用的不同的字节排序方法来存储数据。
+ * “big endian”（高位优先）将最重要的字节存放在地址最低
+ * 的存储单元。而“little endian”（低位优先）则是将最重要的字节
+ * 放在地址最高的存储单元。当存储量大于一个字节时，像int、float
+ * 等，就要考虑字节的顺序问题了。ByteBuffer是以高位优先的形式
+ * 存储数据的，并且数据在网上传送时也常常使用高位优先的形式。
  */
 public class Endians {
     public static void main(String[] args) {
