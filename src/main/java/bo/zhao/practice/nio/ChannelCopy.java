@@ -1,7 +1,6 @@
-package nio;
+package bo.zhao.practice.nio;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -12,7 +11,7 @@ import java.nio.channels.FileChannel;
  * <p/>
  * date:2016/12/11
  * <p/>
- * package_name:nio
+ * package_name:bo.zhao.practice.nio
  * <p/>
  * project: MyPractice
  */

@@ -1,3 +1,5 @@
+package bo.zhao.practice;
+
 /**
  * author:xszhaobo
  * <p/>

@@ -1,4 +1,4 @@
-package nio;
+package bo.zhao.practice.nio;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -9,7 +9,7 @@ import java.util.Arrays;
  * <p/>
  * date:2016/12/14
  * <p/>
- * package_name:nio
+ * package_name:bo.zhao.practice.nio
  * <p/>
  * project: MyPractice
  * 不同的机器可能会使用的不同的字节排序方法来存储数据。

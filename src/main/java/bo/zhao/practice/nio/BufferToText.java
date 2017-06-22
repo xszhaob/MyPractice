@@ -1,4 +1,4 @@
-package nio;
+package bo.zhao.practice.nio;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,7 +12,7 @@ import java.nio.charset.Charset;
  * <p/>
  * date:2016/12/12
  * <p/>
- * package_name:nio
+ * package_name:bo.zhao.practice.nio
  * <p/>
  * project: MyPractice
  */

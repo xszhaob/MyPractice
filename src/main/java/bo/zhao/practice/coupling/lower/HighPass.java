@@ -1,17 +1,17 @@
-package coupling.lower;
+package bo.zhao.practice.coupling.lower;
 
 /**
  * author:xszhaobo
  * <p/>
  * date:2017/3/25
  * <p/>
- * package_name:coupling
+ * package_name:bo.zhao.practice.coupling
  * <p/>
  * project: MyPractice
  */
-public class LowPass extends Filter {
+public class HighPass extends Filter {
     double cutoff;
-    public LowPass(double cutoff) {
+    public HighPass(double cutoff) {
         this.cutoff = cutoff;
     }
 

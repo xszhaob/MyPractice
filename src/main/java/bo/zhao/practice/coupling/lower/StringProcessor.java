@@ -1,4 +1,4 @@
-package coupling.lower;
+package bo.zhao.practice.coupling.lower;
 
 import java.util.Arrays;
 
@@ -7,7 +7,7 @@ import java.util.Arrays;
  * <p/>
  * date:2017/3/25
  * <p/>
- * package_name:coupling.lower
+ * package_name:bo.zhao.practice.coupling.lower
  * <p/>
  * project: MyPractice
  */

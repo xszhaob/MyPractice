@@ -1,4 +1,4 @@
-package nio;
+package bo.zhao.practice.nio;
 
 import java.nio.ByteBuffer;
 
@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
  * <p/>
  * date:2016/12/13
  * <p/>
- * package_name:nio
+ * package_name:bo.zhao.practice.nio
  * <p/>
  * project: MyPractice
  */

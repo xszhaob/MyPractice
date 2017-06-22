@@ -1,3 +1,5 @@
+package bo.zhao.practice;
+
 /**
  * author:xszhaobo
  * <p/>
@@ -7,9 +9,9 @@
  * <p/>
  * project: MyPractice
  */
-class Cake {
-    public static void main(String[] args) {
-        Pie pie = new Pie();
-        pie.f();
+class Pie {
+
+    void f() {
+        System.out.println("Pie.f()");
     }
 }
