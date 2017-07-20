@@ -3,7 +3,6 @@ package bo.zhao.practice.refactoring.chapter06;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
 /**
