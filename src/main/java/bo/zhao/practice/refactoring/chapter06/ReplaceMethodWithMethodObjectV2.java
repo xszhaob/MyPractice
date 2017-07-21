@@ -10,7 +10,6 @@ public class ReplaceMethodWithMethodObjectV2 {
             return new Gamma(this,inputVal,quantity,yearToDate).compute();
         }
 
-
         int delta() {
             return 1;
         }
@@ -36,7 +35,7 @@ public class ReplaceMethodWithMethodObjectV2 {
             importantValue1 = (inputVal * quantity) + account.delta();
             importantValue2 = (inputVal * yearToDate) + 100;
             importantThing();
-            int importantValue3 = importantValue2 * 7;
+            importantValue3 = importantValue2 * 7;
 
             return importantValue3 -2 * importantValue1;
         }
