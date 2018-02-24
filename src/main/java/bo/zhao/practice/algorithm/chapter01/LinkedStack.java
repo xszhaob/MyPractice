@@ -33,6 +33,11 @@ public class LinkedStack<E> implements Iterable<E> {
         return e;
     }
 
+    public E peek() {
+        Node f = first;
+        return f == null ? null : f.item;
+    }
+
     @Override
     public Iterator<E> iterator() {
         return new LinkedStackIterator();
