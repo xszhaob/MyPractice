@@ -10,15 +10,15 @@ public class LinkedStack<E> implements Iterable<E> {
     private Node first;
     private int n;
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return n == 0;
     }
 
-    private int size() {
+    public int size() {
         return n;
     }
 
-    private void push(E e) {
+    public void push(E e) {
         Node oldFirst = first;
         first = new Node();
         first.item = e;
@@ -69,19 +69,25 @@ public class LinkedStack<E> implements Iterable<E> {
 
     public static void main(String[] args) {
         LinkedStack<String> linkedStack = new LinkedStack<String>();
-        linkedStack.push("hello");
-        linkedStack.push("world");
-        linkedStack.push("bo");
-        linkedStack.push("zhao");
+        linkedStack.push("it");
+        linkedStack.push("was");
+        linkedStack.push("-");
+        linkedStack.push("the");
+        linkedStack.push("best");
+        linkedStack.push("-");
+        linkedStack.push("of");
+        linkedStack.push("times");
+        linkedStack.push("-");
+        linkedStack.push("-");
+        linkedStack.push("-");
+        linkedStack.push("it");
+        linkedStack.push("was");
+        linkedStack.push("-");
+        linkedStack.push("the");
+        linkedStack.push("-");
+        linkedStack.push("-");
         for (String s : linkedStack) {
             System.out.println(s);
         }
-
-        System.out.println(linkedStack.size());
-        System.out.println(linkedStack.pop());
-        System.out.println(linkedStack.pop());
-        System.out.println(linkedStack.pop());
-        System.out.println(linkedStack.pop());
-        System.out.println(linkedStack.size());
     }
 }
