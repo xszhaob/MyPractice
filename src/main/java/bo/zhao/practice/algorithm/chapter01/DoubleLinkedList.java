@@ -9,7 +9,7 @@ import java.util.Iterator;
  * @version 3.0
  * @since 18/2/25
  */
-public class DoubleLinked<E> implements Iterable<E> {
+public class DoubleLinkedList<E> implements Iterable<E> {
 
     private DoubleNode first;
     private DoubleNode last;
@@ -92,19 +92,19 @@ public class DoubleLinked<E> implements Iterable<E> {
             E tmp = current.item;
             if ((tmp == null && item == null)
                     || (tmp != null && tmp.equals(item))) {
-                    DoubleNode node = new DoubleNode();
-                    node.item = newItem;
-                    node.previous = current.previous;
-                    node.next = current;
-                    current.previous = node;
-                    if (node.previous != null) {
-                        node.previous.next = node;
-                    } else {
-                        first = node;
-                    }
+                DoubleNode node = new DoubleNode();
+                node.item = newItem;
+                node.previous = current.previous;
+                node.next = current;
+                current.previous = node;
+                if (node.previous != null) {
+                    node.previous.next = node;
+                } else {
+                    first = node;
+                }
 
-                    n++;
-                    return;
+                n++;
+                return;
             }
             current = current.next;
         }
@@ -152,17 +152,15 @@ public class DoubleLinked<E> implements Iterable<E> {
             if ((tmp == null && item == null)
                     || (tmp != null && tmp.equals(item))) {
                 if (i == 1) {
-                    current.next.previous = null;
-                    first = current.next;
-                } else if (i == n){
-                    current.previous.next = null;
-                    last = current.previous;
+                    return pollFirst();
+                } else if (i == n) {
+                    return pollLast();
                 } else {
                     current.next.previous = current.previous;
                     current.previous.next = current.next;
+                    n--;
+                    return tmp;
                 }
-                n--;
-                return tmp;
             }
             current = current.next;
         }
@@ -172,33 +170,70 @@ public class DoubleLinked<E> implements Iterable<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new ListIterator();
+    }
+
+
+    public Iterator<E> reversed() {
+        return new ReverseIterable();
+    }
+
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (E e : this) {
+            sb.append(e).append(" ");
+        }
+        return sb.toString();
+    }
+
+    public String toReversedString() {
+        Iterator<E> reversed = this.reversed();
+
+        StringBuilder sb = new StringBuilder();
+        while (reversed.hasNext()) {
+            sb.append(reversed.next()).append(" ");
+        }
+        return sb.toString();
+    }
+
+    private class ListIterator implements Iterator<E> {
+
+        private DoubleNode current = first;
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public E next() {
+            E item = current.item;
+            current = current.next;
+            return item;
+        }
+    }
+
+
+    private class ReverseIterable implements Iterator<E> {
+        private DoubleNode current = last;
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public E next() {
+            E item = current.item;
+            current = current.previous;
+            return item;
+        }
     }
 
     private class DoubleNode {
         private E item;
         private DoubleNode next;
         private DoubleNode previous;
-    }
-
-
-    public static void main(String[] args) {
-        DoubleLinked<String> linked = new DoubleLinked<>();
-        linked.addFirst("c");
-        linked.addFirst("b");
-        linked.addLast("d");
-        linked.addLast("e");
-        linked.addBefore("b", "a");
-        linked.addAfter("e", "f");
-
-        System.out.println(linked.remove("a"));
-
-        while (!linked.isEmpty()) {
-            String s = linked.pollLast();
-            if (s == null) {
-                continue;
-            }
-            System.out.println(s);
-        }
     }
 }

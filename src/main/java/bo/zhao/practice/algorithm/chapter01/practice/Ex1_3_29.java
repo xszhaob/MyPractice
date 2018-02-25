@@ -20,8 +20,21 @@ public class Ex1_3_29<E> {
             last.next = last;
         } else {
             last.next = oldLast.next;
+            oldLast.next = last;
         }
         n++;
+    }
+
+    public E dequeue() {
+        if (n == 0) throw new RuntimeException("Queue underflow");
+        E item = last.next.item;
+        if (last.next == last) {
+            last = null;
+        } else {
+            last.next = last.next.next;
+        }
+        n--;
+        return item;
     }
 
 
@@ -38,6 +51,6 @@ public class Ex1_3_29<E> {
         ex.enqueue("c");
         ex.enqueue("d");
 
-        System.out.println(ex.last.next.item);
+        System.out.println(ex.last.next.next.item);
     }
 }
