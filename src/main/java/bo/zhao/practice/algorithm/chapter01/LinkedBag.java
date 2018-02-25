@@ -14,7 +14,7 @@ public class LinkedBag<E> implements Iterable<E> {
     private Node first;
     private int n;
 
-    private void add(E e) {
+    public void add(E e) {
         Node tmp = first;
         first = new Node();
         first.item = e;
