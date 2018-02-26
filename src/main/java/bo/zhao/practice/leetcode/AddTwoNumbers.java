@@ -1,7 +1,5 @@
 package bo.zhao.practice.leetcode;
 
-import bo.zhao.practice.designpattern.builder.Packing;
-
 /**
  * 文件描述：
  *
@@ -11,32 +9,29 @@ import bo.zhao.practice.designpattern.builder.Packing;
  */
 public class AddTwoNumbers {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        int n = 0;
-        int count1 = l1.val;
-        int count2 = l2.val;
-        ListNode tempL1 = l1.next;
-        ListNode tempL2 = l2.next;
-        while (tempL1 != null) {
-            int pow = (int) Math.pow(10, ++n);
-            count1 += tempL1.val * pow;
-            count2 += tempL2.val * pow;
-            tempL1 = tempL1.next;
-            tempL2 = tempL2.next;
-        }
+        ListNode resultHead = new ListNode(0);
+        ListNode tmp = resultHead;
+        int carry = 0;
+        while (l1 != null || l2 != null) {
+            int v1 = l1 == null ? 0 : l1.val;
+            int v2 = l2 == null ? 0 : l2.val;
 
+            int sum = v1 + v2 + carry;
+            carry = sum / 10;
 
-        int sum = count1 + count2;
-        System.out.println("sum = " + sum);
-        ListNode result = new ListNode(sum % 10);
-        ListNode tmp = result;
-        int val = sum / 10;
-        while (val > 0) {
-            tmp.next = new ListNode(val % 10);
+            tmp.next = new ListNode(sum % 10);
             tmp = tmp.next;
-            val = val / 10;
+
+            l1 = l1 != null ? l1.next : null;
+            l2 = l2 != null ? l2.next : null;
+
         }
 
-        return result;
+        if (carry > 0) {
+            tmp.next = new ListNode(carry);
+        }
+
+        return resultHead.next;
     }
 
 
@@ -66,7 +61,7 @@ public class AddTwoNumbers {
     public static void main(String[] args) {
         ListNode node1 = new ListNode(2);
         node1.next = new ListNode(4);
-        node1.next.next = new ListNode(3);
+        node1.next.next = new ListNode(5);
 
         ListNode node2 = new ListNode(5);
         node2.next = new ListNode(6);
