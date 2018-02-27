@@ -1,7 +1,5 @@
 package bo.zhao.practice.leetcode;
 
-import bo.zhao.practice.designpattern.builder.Packing;
-
 /**
  * 文件描述：
  *
