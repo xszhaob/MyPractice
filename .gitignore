@@ -2,3 +2,11 @@
 /.idea/
 /MyPractice.iml
 target/
+/.idea/.name
+/.idea/compiler.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/vcs.xml
+/.idea/kotlinc.xml
+/.idea/uiDesigner.xml
+/.idea/encodings.xml
