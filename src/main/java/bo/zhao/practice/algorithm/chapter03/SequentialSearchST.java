@@ -1,5 +1,7 @@
 package bo.zhao.practice.algorithm.chapter03;
 
+import java.util.Iterator;
+
 /**
  * 文件描述：
  *
@@ -33,6 +35,7 @@ public class SequentialSearchST<K, V> implements ST<K, V> {
             if (key.equals(x.getKey())) {
                 return x.getValue();
             }
+            x = x.getNext();
         }
         return null;
     }
@@ -64,6 +67,7 @@ public class SequentialSearchST<K, V> implements ST<K, V> {
             if (key.equals(x.getKey())) {
                 return true;
             }
+            x = x.getNext();
         }
         return false;
     }
@@ -80,6 +84,30 @@ public class SequentialSearchST<K, V> implements ST<K, V> {
 
     @Override
     public Iterable<K> keys() {
-        return null;
+        return new SequentialSearchIt();
+    }
+
+    private class SequentialSearchIt implements Iterable<K> {
+        @Override
+        public Iterator<K> iterator() {
+            return new SequentialSearchSTIterator();
+        }
+    }
+
+    private class SequentialSearchSTIterator implements Iterator<K> {
+
+        private Node<K, V> node = first;
+
+        @Override
+        public boolean hasNext() {
+            return node != null;
+        }
+
+        @Override
+        public K next() {
+            Node<K, V> tmp = node;
+            node = node.getNext();
+            return tmp.getKey();
+        }
     }
 }
