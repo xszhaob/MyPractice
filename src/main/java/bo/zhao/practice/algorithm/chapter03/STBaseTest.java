@@ -1,8 +1,11 @@
 package bo.zhao.practice.algorithm.chapter03;
 
+import org.junit.Assert;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 文件描述：
@@ -31,20 +34,39 @@ public class STBaseTest {
         return result;
     }
 
+    private List<String> extractKey(List<Tuple<String, Integer>> tupleList) {
+        return tupleList.stream().map(Tuple::getKey).collect(Collectors.toList());
+    }
+
     protected void baseTest(List<Tuple<String, Integer>> tupleList) {
-        SequentialSearchST<String, Integer> ssst = new SequentialSearchST<>();
+        SequentialSearchST<String, Integer> st = new SequentialSearchST<>();
         for (Tuple<String, Integer> tuple : tupleList) {
-            ssst.put(tuple.getKey(), tuple.getValue());
+            st.put(tuple.getKey(), tuple.getValue());
         }
 
-        Iterator<String> keys = ssst.keys().iterator();
+        testContains(extractKey(tupleList), st);
+
+        show(st);
+
+        testDelete(extractKey(tupleList), st);
+
+        Assert.assertTrue(st.isEmpty());
+
+    }
+
+    private <K, V> void testContains(List<K> keys, ST<K, V> st) {
+        keys.forEach(key -> Assert.assertTrue(st.contains(key)));
+    }
+
+    private <K, V> void show(ST<K, V> st) {
+        Iterator<K> keys = st.keys().iterator();
         while (keys.hasNext()) {
-            String s = keys.next();
-            System.out.println(s + " " + ssst.get(s));
+            K key = keys.next();
+            System.out.println(key + " " + st.get(key));
         }
+    }
 
-//        for (String s : ssst.keys()) {
-//            System.out.println(s + " " + ssst.get(s));
-//        }
+    private <K, V> void testDelete(List<K> keys, ST<K, V> st) {
+        keys.forEach(st::delete);
     }
 }
