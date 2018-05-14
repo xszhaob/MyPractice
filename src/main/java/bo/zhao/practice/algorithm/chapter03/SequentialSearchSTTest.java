@@ -9,6 +9,6 @@ public class SequentialSearchSTTest extends STBaseTest {
 
     @Test
     public void test() {
-        baseTest(mockList());
+        baseTest(mockList(), new SequentialSearchST<>());
     }
 }

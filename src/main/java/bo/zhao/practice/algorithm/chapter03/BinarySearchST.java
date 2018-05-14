@@ -1,5 +1,7 @@
 package bo.zhao.practice.algorithm.chapter03;
 
+import java.util.Iterator;
+
 /**
  * 文件描述：
  *
@@ -23,7 +25,7 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
 
     @Override
     public K min() {
-        return null;
+        return keys[0];
     }
 
     @Override
@@ -34,6 +36,7 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
             return;
         }
         // 动态扩容
+        resize();
         for (int j = count; j > i; j--) {
             keys[j] = keys[j - 1];
             values[j] = values[j - 1];
@@ -45,7 +48,7 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
 
     @Override
     public K max() {
-        return null;
+        return keys[count - 1];
     }
 
     @Override
@@ -61,28 +64,56 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
     }
 
     @Override
-    public K floor() {
-        return null;
+    public K floor(K key) {
+        return keys[rank(key)];
     }
 
     @Override
     public K ceiling(K key) {
-        return null;
+        return keys[rank(key) + 1];
     }
 
     @Override
     public void delete(K key) {
-
+        if (count == 0) {
+            return;
+        }
+        int i = rank(key);
+        if (i == count) {
+            return;
+        }
+        if (keys[i].compareTo(key) == 0) {
+            for (int n = i; n < count - 1; n++) {
+                keys[n] = keys[n + 1];
+            }
+        }
+        keys[count - 1] = null;
+        count--;
     }
 
     @Override
     public int rank(K key) {
-        return 0;
+        int lo = 0;
+        int hi = count - 1;
+
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            int com = keys[mid].compareTo(key);
+            if (com > 0) {
+                hi = mid - 1;
+            } else if (com < 0) {
+                lo = mid + 1;
+            } else {
+                return mid;
+            }
+        }
+        return lo;
     }
 
     @Override
     public boolean contains(K key) {
-        return false;
+        int i = rank(key);
+        return keys[i].compareTo(key) == 0;
     }
 
     @Override
@@ -92,7 +123,7 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
 
     @Override
     public K select(int k) {
-        return null;
+        return keys[k];
     }
 
     @Override
@@ -102,7 +133,13 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
 
     @Override
     public Iterable<K> keys(K lo, K hi) {
-        return null;
+        if (lo.compareTo(hi) >= 0) {
+            return null;
+        }
+        int from = rank(lo);
+        int to = rank(hi);
+
+        return new BinarySearchSTKeyIterable(from, to);
     }
 
     @SuppressWarnings("unchecked")
@@ -111,6 +148,47 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
             K[] newKeys = (K[]) new Comparable[count * 2];
             System.arraycopy(keys, 0, newKeys, 0, count);
             keys = newKeys;
+            V[] newValues = (V[]) new Object[count * 2];
+            System.arraycopy(values, 0, newValues, 0, count);
+            values = newValues;
+        }
+    }
+
+
+    private class BinarySearchSTKeyIterable implements Iterable<K> {
+        private final int lo;
+        private final int hi;
+
+        public BinarySearchSTKeyIterable(int lo, int hi) {
+            this.lo = lo;
+            this.hi = hi;
+        }
+
+        @Override
+        public Iterator<K> iterator() {
+            return new BinarySearchSTKeyIterator(lo, hi);
+        }
+    }
+
+
+    private class BinarySearchSTKeyIterator implements Iterator<K> {
+
+        private final int hi;
+        private int currentIndex;
+
+        public BinarySearchSTKeyIterator(int lo, int hi) {
+            this.hi = hi;
+            this.currentIndex = lo;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentIndex <= hi;
+        }
+
+        @Override
+        public K next() {
+            return keys[currentIndex++];
         }
     }
 }

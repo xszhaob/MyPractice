@@ -20,9 +20,9 @@ public interface SortST<K extends Comparable<K>,V> extends ST<K,V> {
     K max();
 
     /**
-     * 小于等于key的最小键
+     * 小于等于key的最大键
      */
-    K floor();
+    K floor(K key);
 
     /**
      * 大于等于key的最小键

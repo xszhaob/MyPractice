@@ -34,13 +34,12 @@ public class STBaseTest {
         return result;
     }
 
-    private List<String> extractKey(List<Tuple<String, Integer>> tupleList) {
+    private <K, V> List<K> extractKey(List<Tuple<K, V>> tupleList) {
         return tupleList.stream().map(Tuple::getKey).collect(Collectors.toList());
     }
 
-    protected void baseTest(List<Tuple<String, Integer>> tupleList) {
-        SequentialSearchST<String, Integer> st = new SequentialSearchST<>();
-        for (Tuple<String, Integer> tuple : tupleList) {
+    protected <K, V> void baseTest(List<Tuple<K, V>> tupleList, ST<K, V> st) {
+        for (Tuple<K, V> tuple : tupleList) {
             st.put(tuple.getKey(), tuple.getValue());
         }
 
