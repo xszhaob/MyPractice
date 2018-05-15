@@ -23,6 +23,9 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
         values = (V[]) new Comparable[capacity];
     }
 
+    /**
+     * 常数级别的操作
+     */
     @Override
     public K min() {
         return keys[0];
@@ -70,7 +73,20 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
 
     @Override
     public K ceiling(K key) {
-        return keys[rank(key) + 1];
+        if (isEmpty()) {
+            return null;
+        }
+        int i = rank(key);
+        // 大于最大值
+        if (i == count) {
+            return null;
+        }
+        // 小于最小值
+        if (i == 0) {
+            return keys[0];
+        }
+        // 正常情况
+        return keys[i + 1];
     }
 
     @Override
@@ -83,9 +99,7 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
             return;
         }
         if (keys[i].compareTo(key) == 0) {
-            for (int n = i; n < count - 1; n++) {
-                keys[n] = keys[n + 1];
-            }
+            System.arraycopy(keys, i + 1, keys, i, count - 1 - i);
         }
         keys[count - 1] = null;
         count--;
@@ -159,7 +173,7 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
         private final int lo;
         private final int hi;
 
-        public BinarySearchSTKeyIterable(int lo, int hi) {
+        BinarySearchSTKeyIterable(int lo, int hi) {
             this.lo = lo;
             this.hi = hi;
         }
@@ -176,7 +190,7 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
         private final int hi;
         private int currentIndex;
 
-        public BinarySearchSTKeyIterator(int lo, int hi) {
+        BinarySearchSTKeyIterator(int lo, int hi) {
             this.hi = hi;
             this.currentIndex = lo;
         }
