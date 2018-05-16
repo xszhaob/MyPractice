@@ -1,6 +1,10 @@
 package bo.zhao.practice.algorithm.chapter03;
 
+import bo.zhao.practice.algorithm.chapter01.LinkedQueue;
+import bo.zhao.practice.algorithm.chapter01.Queue;
+
 import java.util.Iterator;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 文件描述：
@@ -33,6 +37,9 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
 
     @Override
     public void put(K key, V value) {
+        if (value == null) {
+            delete(key);
+        }
         int i = rank(key);
         if (i < count && keys[i].compareTo(key) == 0) {
             values[i] = value;
@@ -68,7 +75,21 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
 
     @Override
     public K floor(K key) {
-        return keys[rank(key)];
+        // 找到小于k的符号的数量
+        int i = rank(key);
+        /*
+        如果i小于count 并且keys[i].compareTo(key) == 0，则返回keys[i]。
+        这里包含刚好key就是最小符号的情况
+         */
+        if (i < count && keys[i].compareTo(key) == 0) {
+            return keys[i];
+        }
+        // 如果key小于最小符号的情况
+        if (i == 0) {
+            return null;
+        }
+        // 包括了key大于最小符号的所有场景
+        return keys[i - 1];
     }
 
     @Override
@@ -77,16 +98,12 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
             return null;
         }
         int i = rank(key);
-        // 大于最大值
+        // 大于最大符号
         if (i == count) {
             return null;
         }
-        // 小于最小值
-        if (i == 0) {
-            return keys[0];
-        }
-        // 正常情况
-        return keys[i + 1];
+        // 小于最大符号以外的所有场景
+        return keys[i];
     }
 
     @Override
@@ -98,11 +115,16 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
         if (i == count) {
             return;
         }
-        if (keys[i].compareTo(key) == 0) {
-            System.arraycopy(keys, i + 1, keys, i, count - 1 - i);
+        int com = keys[i].compareTo(key);
+        if (com != 0) {
+            return;
         }
+        System.arraycopy(keys, i + 1, keys, i, count - 1 - i);
+        System.arraycopy(values, i + 1, values, i, count - 1 - i);
         keys[count - 1] = null;
+        values[count - 1] = null;
         count--;
+        resize();
     }
 
     @Override
@@ -139,6 +161,9 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
 
     @Override
     public K select(int k) {
+        if (k < 0 || k >= size()) {
+            throw new RuntimeException("called select() with invalid argument:" + k);
+        }
         return keys[k];
     }
 
@@ -149,62 +174,39 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
 
     @Override
     public Iterable<K> keys(K lo, K hi) {
-        if (lo.compareTo(hi) >= 0) {
-            return null;
+        LinkedQueue<K> queue = new LinkedQueue<>();
+        if (lo.compareTo(hi) > 0) {
+            return queue;
         }
+
         int from = rank(lo);
         int to = rank(hi);
 
-        return new BinarySearchSTKeyIterable(from, to);
+        for (int i = from; i < to; i++) {
+            queue.enqueue(keys[i]);
+        }
+        if (contains(hi)) {
+            queue.enqueue(keys[to]);
+        }
+        return queue;
     }
 
     @SuppressWarnings("unchecked")
     private void resize() {
         if (keys.length == count) {
             K[] newKeys = (K[]) new Comparable[count * 2];
-            System.arraycopy(keys, 0, newKeys, 0, count);
-            keys = newKeys;
             V[] newValues = (V[]) new Object[count * 2];
+            System.arraycopy(keys, 0, newKeys, 0, count);
             System.arraycopy(values, 0, newValues, 0, count);
+            keys = newKeys;
             values = newValues;
-        }
-    }
-
-
-    private class BinarySearchSTKeyIterable implements Iterable<K> {
-        private final int lo;
-        private final int hi;
-
-        BinarySearchSTKeyIterable(int lo, int hi) {
-            this.lo = lo;
-            this.hi = hi;
-        }
-
-        @Override
-        public Iterator<K> iterator() {
-            return new BinarySearchSTKeyIterator(lo, hi);
-        }
-    }
-
-
-    private class BinarySearchSTKeyIterator implements Iterator<K> {
-
-        private final int hi;
-        private int currentIndex;
-
-        BinarySearchSTKeyIterator(int lo, int hi) {
-            this.hi = hi;
-            this.currentIndex = lo;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return currentIndex <= hi;
-        }
-
-        @Override
-        public K next() {
-            return keys[currentIndex++];
+        } else if (keys.length / 4 > count) {
+            K[] newKeys = (K[]) new Comparable[keys.length / 2];
+            V[] newValues = (V[]) new Object[values.length / 2];
+            System.arraycopy(keys, 0, newKeys, 0, count);
+            System.arraycopy(values, 0, newValues, 0, count);
+            keys = newKeys;
+            values = newValues;
         }
     }
 }

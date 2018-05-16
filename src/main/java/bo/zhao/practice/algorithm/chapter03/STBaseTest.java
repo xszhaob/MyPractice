@@ -38,6 +38,23 @@ public class STBaseTest {
         return tupleList.stream().map(Tuple::getKey).collect(Collectors.toList());
     }
 
+    protected void baseTestString(List<Tuple<String, Integer>> tupleList, ST<String, Integer> st) {
+        for (Tuple<String, Integer> tuple : tupleList) {
+            st.put(tuple.getKey(), tuple.getValue());
+        }
+
+        List<String> strings = extractKey(tupleList);
+        strings.add(0, "W");
+//        testContains(strings, st);
+
+        show(st);
+
+        testDelete(strings, st);
+
+        Assert.assertTrue(st.isEmpty());
+
+    }
+
     protected <K, V> void baseTest(List<Tuple<K, V>> tupleList, ST<K, V> st) {
         for (Tuple<K, V> tuple : tupleList) {
             st.put(tuple.getKey(), tuple.getValue());
@@ -65,7 +82,7 @@ public class STBaseTest {
         }
     }
 
-    private <K, V> void testDelete(List<K> keys, ST<K, V> st) {
+    protected <K, V> void testDelete(List<K> keys, ST<K, V> st) {
         keys.forEach(st::delete);
     }
 }
