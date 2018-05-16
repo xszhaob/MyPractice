@@ -126,8 +126,10 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
 
     @Override
     public boolean contains(K key) {
-        int i = rank(key);
-        return keys[i].compareTo(key) == 0;
+        if (key == null) {
+            throw new IllegalArgumentException();
+        }
+        return get(key) != null;
     }
 
     @Override
