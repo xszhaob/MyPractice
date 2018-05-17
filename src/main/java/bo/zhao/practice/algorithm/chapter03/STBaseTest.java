@@ -95,7 +95,7 @@ public class STBaseTest {
         }
     }
 
-    private <K, V> void testDelete(List<K> keys, ST<K, V> st) {
+    protected <K, V> void testDelete(List<K> keys, ST<K, V> st) {
         keys.forEach(st::delete);
     }
 }
