@@ -14,6 +14,11 @@ public class Node<K, V> {
 
     private V value;
 
+    public Node(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
     public Node(Node<K, V> next, K key, V value) {
         this.next = next;
         this.key = key;

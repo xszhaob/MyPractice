@@ -1,5 +1,6 @@
 package bo.zhao.practice.algorithm.chapter03;
 
+import bo.zhao.practice.algorithm.chapter01.LinkedQueue;
 import org.junit.Assert;
 
 import java.util.ArrayList;
@@ -34,14 +35,37 @@ public class STBaseTest {
         return result;
     }
 
-    private <K, V> List<K> extractKey(List<Tuple<K, V>> tupleList) {
+    protected <K, V> List<K> extractKey(List<Tuple<K, V>> tupleList) {
         return tupleList.stream().map(Tuple::getKey).collect(Collectors.toList());
     }
 
-    protected <K, V> void baseTest(List<Tuple<K, V>> tupleList, ST<K, V> st) {
-        for (Tuple<K, V> tuple : tupleList) {
-            st.put(tuple.getKey(), tuple.getValue());
+    protected void baseTest() {
+        List<Tuple<String, Integer>> tuples = mockList();
+        List<String> list = extractKey(tuples);
+
+        ArrayST<String, Integer> st = new ArrayST<>(2);
+        init(tuples, st);
+
+
+        Iterable<String> keys = st.keys();
+        junit.framework.Assert.assertTrue(((LinkedQueue) keys).size() == st.size());
+
+        for (String key : keys) {
+            junit.framework.Assert.assertTrue(st.contains(key));
+            System.out.println(st.get(key));
         }
+
+        list.remove("M");
+
+        for (String s : list) {
+            st.delete(s);
+        }
+
+        junit.framework.Assert.assertTrue(st.size() == 1);
+    }
+
+    protected <K extends Comparable<K>, V> void baseTest(List<Tuple<K, V>> tupleList, ST<K, V> st) {
+        init(tupleList, st);
 
         testContains(extractKey(tupleList), st);
 
@@ -51,6 +75,12 @@ public class STBaseTest {
 
         Assert.assertTrue(st.isEmpty());
 
+    }
+
+    protected <K extends Comparable<K>, V> void init(List<Tuple<K, V>> tupleList, ST<K, V> st) {
+        for (Tuple<K, V> tuple : tupleList) {
+            st.put(tuple.getKey(), tuple.getValue());
+        }
     }
 
     private <K, V> void testContains(List<K> keys, ST<K, V> st) {

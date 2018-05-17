@@ -1,5 +1,7 @@
 package bo.zhao.practice.algorithm.chapter03;
 
+import bo.zhao.practice.algorithm.chapter01.LinkedQueue;
+
 /**
  * 文件描述：
  *
@@ -27,7 +29,7 @@ public class ArrayST<K extends Comparable<K>, V> implements ST<K, V> {
             delete(key);
         }
         resize();
-        for (int i = 0; i < keys.length; i++) {
+        for (int i = 0; i < count; i++) {
             int com = keys[i].compareTo(key);
             if (com == 0) {
                 keys[i] = key;
@@ -56,7 +58,7 @@ public class ArrayST<K extends Comparable<K>, V> implements ST<K, V> {
         if (key == null) {
             return;
         }
-        for (int i = 0; i < keys.length; i++) {
+        for (int i = 0; i < count; i++) {
             int com = keys[i].compareTo(key);
             if (com == 0) {
                 for (int j = i; j < count - 1; j++) {
@@ -72,22 +74,26 @@ public class ArrayST<K extends Comparable<K>, V> implements ST<K, V> {
 
     @Override
     public boolean contains(K key) {
-        return false;
+        return get(key) != null;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return count == 0;
     }
 
     @Override
     public int size() {
-        return 0;
+        return count;
     }
 
     @Override
     public Iterable<K> keys() {
-        return null;
+        LinkedQueue<K> queue = new LinkedQueue<>();
+        for (int i = 0; i < count; i++) {
+            queue.enqueue(keys[i]);
+        }
+        return queue;
     }
 
 
@@ -95,12 +101,18 @@ public class ArrayST<K extends Comparable<K>, V> implements ST<K, V> {
     private void resize() {
         if (keys.length == count) {
             K[] newKeys = (K[]) new Comparable[count * 2];
+            V[] newValues = (V[]) new Object[count * 2];
             System.arraycopy(keys, 0, newKeys, 0, count);
+            System.arraycopy(values, 0, newValues, 0, count);
             keys = newKeys;
+            values = newValues;
         } else if (keys.length / 4 > count) {
-            K[] newKeys = (K[]) new Comparable[count / 2];
+            K[] newKeys = (K[]) new Comparable[keys.length / 2];
+            V[] newValues = (V[]) new Object[values.length / 2];
             System.arraycopy(keys, 0, newKeys, 0, count);
+            System.arraycopy(values, 0, newValues, 0, count);
             keys = newKeys;
+            values = newValues;
         }
     }
 }

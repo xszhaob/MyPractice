@@ -9,7 +9,7 @@ import java.util.Iterator;
  * @version 3.0
  * @since 18/5/9
  */
-public class SequentialSearchST<K, V> implements ST<K, V> {
+public class SequentialSearchST<K extends Comparable<K>, V> implements ST<K, V> {
     private Node<K, V> first;
 
     private int count;
@@ -40,24 +40,47 @@ public class SequentialSearchST<K, V> implements ST<K, V> {
         return null;
     }
 
+//    public void delete(K key) {
+//        Node<K, V> x = first;
+//        Node<K, V> last = null;
+//        while (x != null) {
+//            if (key.equals(x.getKey())) {
+//                // 第一个
+//                if (last == null) {
+//                    first = x.getNext();
+//                } else {
+//                    last.setNext(x.getNext());
+//                }
+//                count--;
+//                return;
+//            }
+//            last = x;
+//            x = x.getNext();
+//        }
+//    }
+
+
     @Override
     public void delete(K key) {
-        Node<K, V> x = first;
-        Node<K, V> last = null;
-        while (x != null) {
-            if (key.equals(x.getKey())) {
-                // 第一个
-                if (last == null) {
-                    first = x.getNext();
-                } else {
-                    last.setNext(x.getNext());
-                }
-                count--;
-                return;
-            }
-            last = x;
-            x = x.getNext();
+        if (key == null) {
+            throw new IllegalArgumentException("argument to delete() is null");
         }
+        first = delete(first, key);
+    }
+
+    /**
+     * 递归的方式删除节点信息
+     */
+    private Node<K,V> delete(Node<K,V> x, K key) {
+        if (x == null) {
+            return null;
+        }
+        if (key.equals(x.getKey())) {
+            count--;
+            return x.getNext();
+        }
+        x.setNext(delete(x.getNext(), key));
+        return x;
     }
 
     @Override
