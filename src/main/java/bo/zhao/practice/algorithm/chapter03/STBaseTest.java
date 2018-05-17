@@ -6,6 +6,7 @@ import org.junit.Assert;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -17,7 +18,17 @@ import java.util.stream.Collectors;
  */
 public class STBaseTest {
 
-    protected List<Tuple<String, Integer>> mockList() {
+
+    protected static List<String> mockStringList(int randomN) {
+        Random random = new Random();
+        List<String> result = new ArrayList<>(randomN);
+        for (int i = 0; i < randomN; i++) {
+            result.add(String.valueOf(random.nextInt(1000)));
+        }
+        return result;
+    }
+
+    protected static List<Tuple<String, Integer>> mockList() {
         List<Tuple<String, Integer>> result = new ArrayList<>(13);
         result.add(new Tuple<>("S", 0));
         result.add(new Tuple<>("E", 1));
