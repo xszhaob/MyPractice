@@ -1,5 +1,7 @@
 package bo.zhao.practice.algorithm.chapter03;
 
+import bo.zhao.practice.algorithm.chapter01.LinkedQueue;
+
 /**
  * 文件描述：
  *
@@ -76,6 +78,9 @@ public interface SortST<K extends Comparable<K>,V> extends ST<K,V> {
      */
     @Override
     default Iterable<K> keys() {
+        if (isEmpty()) {
+            return new LinkedQueue<>();
+        }
         return keys(min(), max());
     }
 }

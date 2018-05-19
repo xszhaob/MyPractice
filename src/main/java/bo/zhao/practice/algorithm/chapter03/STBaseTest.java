@@ -98,7 +98,7 @@ public class STBaseTest {
         keys.forEach(key -> Assert.assertTrue(st.contains(key)));
     }
 
-    private <K, V> void show(ST<K, V> st) {
+    protected <K, V> void show(ST<K, V> st) {
         Iterator<K> keys = st.keys().iterator();
         while (keys.hasNext()) {
             K key = keys.next();
