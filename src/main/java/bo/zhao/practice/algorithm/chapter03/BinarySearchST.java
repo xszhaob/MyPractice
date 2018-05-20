@@ -1,10 +1,6 @@
 package bo.zhao.practice.algorithm.chapter03;
 
 import bo.zhao.practice.algorithm.chapter01.LinkedQueue;
-import bo.zhao.practice.algorithm.chapter01.Queue;
-
-import java.util.Iterator;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 文件描述：

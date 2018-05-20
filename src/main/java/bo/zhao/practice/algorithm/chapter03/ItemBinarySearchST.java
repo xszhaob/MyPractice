@@ -17,9 +17,9 @@ public class ItemBinarySearchST<K extends Comparable<K>, V> implements SortST<K,
     public ItemBinarySearchST() {
     }
 
-//    public ItemBinarySearchST(Item<K, V>[] items) {
-//        this.items = mergeSort(items);
-//    }
+    public ItemBinarySearchST(Item<K, V>[] items) {
+        this.items = mergeSort(items);
+    }
 
     @Override
     public K min() {
