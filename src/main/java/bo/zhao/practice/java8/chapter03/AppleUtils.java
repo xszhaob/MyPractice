@@ -1,4 +1,4 @@
-package bo.zhao.practice.java8;
+package bo.zhao.practice.java8.chapter03;
 
 import java.util.ArrayList;
 import java.util.Arrays;

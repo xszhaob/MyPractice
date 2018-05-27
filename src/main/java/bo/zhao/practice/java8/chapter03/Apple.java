@@ -1,4 +1,4 @@
-package bo.zhao.practice.java8;
+package bo.zhao.practice.java8.chapter03;
 
 /**
  * 文件描述：
@@ -7,19 +7,20 @@ package bo.zhao.practice.java8;
  * @version 3.0
  * @since 18/5/6
  */
-public class Apple {
+public class Apple extends Fruit{
 
     private String color;
 
-    private int weight;
+    private Integer weight;
 
 
     public Apple() {
     }
 
+
     public Apple(String color, int weight) {
-        this.color = color;
         this.weight = weight;
+        this.color = color;
     }
 
     public String getColor() {
@@ -30,11 +31,11 @@ public class Apple {
         this.color = color;
     }
 
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 
