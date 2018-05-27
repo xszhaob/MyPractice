@@ -33,9 +33,11 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
 
     @Override
     public void put(K key, V value) {
+        // 如果value=null，认为是删除数据
         if (value == null) {
             delete(key);
         }
+        // 已经包含了该key，替换
         int i = rank(key);
         if (i < count && keys[i].compareTo(key) == 0) {
             values[i] = value;
@@ -43,6 +45,7 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
         }
         // 动态扩容
         resize();
+        // key后面的数据往后移
         for (int j = count; j > i; j--) {
             keys[j] = keys[j - 1];
             values[j] = values[j - 1];
@@ -115,6 +118,7 @@ public class BinarySearchST<K extends Comparable<K>, V> implements SortST<K, V> 
         if (com != 0) {
             return;
         }
+        // 两个复制操作
         System.arraycopy(keys, i + 1, keys, i, count - 1 - i);
         System.arraycopy(values, i + 1, values, i, count - 1 - i);
         keys[count - 1] = null;

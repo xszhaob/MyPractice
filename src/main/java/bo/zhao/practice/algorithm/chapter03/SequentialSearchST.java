@@ -14,6 +14,11 @@ public class SequentialSearchST<K extends Comparable<K>, V> implements ST<K, V> 
 
     private int count;
 
+    /**
+     *
+     */
+    private Node<K, V> frequencyNode;
+
     @Override
     public void put(K key, V value) {
         Node<K, V> x = first;
