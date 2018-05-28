@@ -1,13 +1,12 @@
 package bo.zhao.practice.algorithm.chapter03;
 
-import bo.zhao.practice.algorithm.chapter01.LinkedQueue;
-import org.junit.Assert;
+import junit.framework.Assert;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 /**
  * 文件描述：
@@ -16,7 +15,50 @@ import java.util.stream.Collectors;
  * @version 3.0
  * @since 18/5/9
  */
-public class STBaseTest {
+public abstract class STBaseTest {
+
+    List<Tuple<String, Integer>> tuples;
+    protected ST<String, Integer> st;
+
+
+
+    @Test
+    public void testAll() {
+        prepare();
+        testSize();
+        testKeys();
+        testGet();
+        testContains();
+        testRank();
+        testSelect();
+        testMin();
+        testMax();
+        testFloor();
+        testCeiling();
+        testDeleteMin();
+        testDeleteMax();
+        testDelete();
+    }
+
+    public void prepare() {
+        initTupleList();
+        initST();
+        init(tuples, getSt());
+    }
+
+    protected void initTupleList() {
+        tuples = mockList();
+    }
+
+    protected abstract void initST();
+
+    protected ST<String, Integer> getSt() {
+        return st;
+    }
+
+    protected int getSize() {
+        return 10;
+    }
 
 
     protected static List<String> mockStringList(int randomN) {
@@ -46,56 +88,48 @@ public class STBaseTest {
         return result;
     }
 
-    protected <K, V> List<K> extractKey(List<Tuple<K, V>> tupleList) {
-        return tupleList.stream().map(Tuple::getKey).collect(Collectors.toList());
-    }
-
-    protected void baseTest() {
-        List<Tuple<String, Integer>> tuples = mockList();
-        List<String> list = extractKey(tuples);
-
-        ArrayST<String, Integer> st = new ArrayST<>(2);
-        init(tuples, st);
-
-
-        Iterable<String> keys = st.keys();
-        junit.framework.Assert.assertTrue(((LinkedQueue) keys).size() == st.size());
-
-        for (String key : keys) {
-            junit.framework.Assert.assertTrue(st.contains(key));
-            System.out.println(st.get(key));
-        }
-
-        list.remove("M");
-
-        for (String s : list) {
-            st.delete(s);
-        }
-
-        junit.framework.Assert.assertTrue(st.size() == 1);
-    }
-
-    protected <K extends Comparable<K>, V> void baseTest(List<Tuple<K, V>> tupleList, ST<K, V> st) {
-        init(tupleList, st);
-
-        testContains(extractKey(tupleList), st);
-
-        show(st);
-
-        testDelete(extractKey(tupleList), st);
-
-        Assert.assertTrue(st.isEmpty());
-
-    }
-
     protected <K extends Comparable<K>, V> void init(List<Tuple<K, V>> tupleList, ST<K, V> st) {
         for (Tuple<K, V> tuple : tupleList) {
             st.put(tuple.getKey(), tuple.getValue());
         }
     }
 
-    private <K, V> void testContains(List<K> keys, ST<K, V> st) {
-        keys.forEach(key -> Assert.assertTrue(st.contains(key)));
+    public void testSize() {
+        Assert.assertTrue(getSt().size() == getSize());
+    }
+
+    public void testKeys() {
+        show(getSt());
+    }
+
+    public void testGet() {
+        List<Tuple<String, Integer>> localTuples = new ArrayList<>(tuples);
+        localTuples.add(new Tuple<>("i", 100));
+        for (Tuple<String, Integer> localTuple : localTuples) {
+            if ("i".equals(localTuple.getKey())) {
+                Assert.assertTrue(getSt().get(localTuple.getKey()) == null);
+            } else {
+                Assert.assertTrue(getSt().get(localTuple.getKey()) != null);
+            }
+        }
+    }
+
+    public void testContains() {
+        Assert.assertTrue(getSt().contains("A"));
+        Assert.assertTrue(getSt().contains("H"));
+        Assert.assertTrue(getSt().contains("S"));
+        Assert.assertTrue(getSt().contains("X"));
+        Assert.assertTrue(!getSt().contains("D"));
+    }
+
+    public void testDelete() {
+        try {
+            getSt().delete(null);
+        } catch (Exception ignore) {}
+        for (Tuple<String, Integer> tuple : tuples) {
+            getSt().delete(tuple.getKey());
+        }
+        Assert.assertTrue(getSt().isEmpty());
     }
 
     protected <K, V> void show(ST<K, V> st) {
@@ -106,7 +140,27 @@ public class STBaseTest {
         }
     }
 
-    protected <K, V> void testDelete(List<K> keys, ST<K, V> st) {
-        keys.forEach(st::delete);
+    protected void testRank() {
+    }
+
+    protected void testSelect() {
+    }
+
+    protected void testMin() {
+    }
+
+    protected void testMax() {
+    }
+
+    protected void testFloor() {
+    }
+
+    protected void testCeiling() {
+    }
+
+    public void testDeleteMin() {
+    }
+
+    public void testDeleteMax() {
     }
 }

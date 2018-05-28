@@ -14,11 +14,6 @@ public class SequentialSearchST<K extends Comparable<K>, V> implements ST<K, V> 
 
     private int count;
 
-    /**
-     *
-     */
-    private Node<K, V> frequencyNode;
-
     @Override
     public void put(K key, V value) {
         Node<K, V> x = first;
@@ -44,26 +39,6 @@ public class SequentialSearchST<K extends Comparable<K>, V> implements ST<K, V> 
         }
         return null;
     }
-
-//    public void delete(K key) {
-//        Node<K, V> x = first;
-//        Node<K, V> last = null;
-//        while (x != null) {
-//            if (key.equals(x.getKey())) {
-//                // 第一个
-//                if (last == null) {
-//                    first = x.getNext();
-//                } else {
-//                    last.setNext(x.getNext());
-//                }
-//                count--;
-//                return;
-//            }
-//            last = x;
-//            x = x.getNext();
-//        }
-//    }
-
 
     @Override
     public void delete(K key) {

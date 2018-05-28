@@ -38,7 +38,7 @@ public class BST<K extends Comparable<K>, V> implements SortST<K, V> {
             // key小于当前结点
             node.setLeft(put(node.getLeft(), key, value));
         }
-        node.setCount(node.getLeft().getCount() + node.getRight().getCount() + 1);
+        node.setCount(size(node.getLeft()) + size(node.getRight()) + 1);
         return node;
     }
 

@@ -5,13 +5,12 @@ package bo.zhao.practice.algorithm.chapter03;
  *
  * @author Bo.Zhao
  * @version 3.0
- * @since 18/5/17
+ * @since 18/5/28
  */
-public class ArraySTTest extends STBaseTest {
+public class BSTTest extends SortSTBaseTest {
 
-    // TODO: 18/5/28 待测试
     @Override
     protected void initST() {
-        st = new ArrayST<>(2);
+        st = new BST<>();
     }
 }
