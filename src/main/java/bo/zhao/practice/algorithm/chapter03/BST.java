@@ -10,7 +10,7 @@ import bo.zhao.practice.algorithm.chapter01.LinkedQueue;
  * @since 18/5/27
  */
 public class BST<K extends Comparable<K>, V> implements SortST<K, V> {
-    private BSTNode<K, V> root;
+    protected BSTNode<K, V> root;
 
     @Override
     public void put(K key, V value) {
@@ -316,7 +316,7 @@ public class BST<K extends Comparable<K>, V> implements SortST<K, V> {
         }
     }
 
-    private int size(BSTNode<K, V> node) {
+    protected int size(BSTNode<K, V> node) {
         if (node == null) {
             return 0;
         }
@@ -345,7 +345,7 @@ public class BST<K extends Comparable<K>, V> implements SortST<K, V> {
         return root.getHeight();
     }
 
-    private void refreshNodeFeature(BSTNode<K, V> node) {
+    protected void refreshNodeFeature(BSTNode<K, V> node) {
         node.setCount(size(node.getLeft()) + size(node.getRight()) + 1);
         node.setHeight(1 + Math.max(height(node.getRight()), height(node.getLeft())));
     }
