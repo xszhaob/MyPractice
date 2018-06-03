@@ -55,6 +55,7 @@ public class NonRecursiveBST<K extends Comparable<K>, V> extends BST<K, V> {
         }
         for (BSTNode<K, V> tmpNode : stack) {
             tmpNode.setCount(size(tmpNode.getLeft()) + size(tmpNode.getRight()) + 1);
+            tmpNode.setHeight(1 + Math.max(height(tmpNode.getLeft()), height(tmpNode.getRight())));
         }
     }
 
