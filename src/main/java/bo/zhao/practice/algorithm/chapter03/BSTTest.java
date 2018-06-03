@@ -22,6 +22,7 @@ public class BSTTest extends SortSTBaseTest {
         prepare();
         BST<String, Integer> bst = (BST<String, Integer>) st;
         Assert.assertEquals(bst.height(), 5);
+        Assert.assertEquals(bst.height(), bst.quickHeight());
         testSize();
         testKeys();
         testGet();
@@ -36,5 +37,6 @@ public class BSTTest extends SortSTBaseTest {
         testDeleteMax();
         testDelete();
         Assert.assertEquals(bst.height(), -1);
+        Assert.assertEquals(bst.height(), bst.quickHeight());
     }
 }

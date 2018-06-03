@@ -27,6 +27,11 @@ public class BSTNode<K, V> {
      */
     private int count;
 
+    /**
+     * 当前树的高度
+     */
+    private int height;
+
     public BSTNode() {
     }
 
@@ -74,5 +79,13 @@ public class BSTNode<K, V> {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

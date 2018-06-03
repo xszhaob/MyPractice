@@ -38,7 +38,7 @@ public class BST<K extends Comparable<K>, V> implements SortST<K, V> {
             // key小于当前结点
             node.setLeft(put(node.getLeft(), key, value));
         }
-        node.setCount(size(node.getLeft()) + size(node.getRight()) + 1);
+        refreshNodeFeature(node);
         return node;
     }
 
@@ -105,7 +105,7 @@ public class BST<K extends Comparable<K>, V> implements SortST<K, V> {
             return node.getRight();
         }
         node.setLeft(deleteMin(node.getLeft()));
-        node.setCount(size(node.getLeft()) + size(node.getRight()) + 1);
+        refreshNodeFeature(node);
         return node;
     }
 
@@ -122,7 +122,7 @@ public class BST<K extends Comparable<K>, V> implements SortST<K, V> {
             return node.getLeft();
         }
         node.setRight(deleteMax(node.getRight()));
-        node.setCount(size(node.getLeft()) + size(node.getRight()) + 1);
+        refreshNodeFeature(node);
         return node;
     }
 
@@ -167,7 +167,7 @@ public class BST<K extends Comparable<K>, V> implements SortST<K, V> {
             node.setRight(deleteMin(tmp.getRight()));
             node.setLeft(tmp.getLeft());
         }
-        node.setCount(size(node.getLeft()) + size(node.getRight()) + 1);
+        refreshNodeFeature(node);
         return node;
     }
 
@@ -336,5 +336,17 @@ public class BST<K extends Comparable<K>, V> implements SortST<K, V> {
             return -1;
         }
         return 1 + Math.max(height(node.getLeft()), height(node.getRight()));
+    }
+
+    public int quickHeight() {
+        if (isEmpty()) {
+            return -1;
+        }
+        return root.getHeight();
+    }
+
+    private void refreshNodeFeature(BSTNode<K, V> node) {
+        node.setCount(size(node.getLeft()) + size(node.getRight()) + 1);
+        node.setHeight(1 + Math.max(height(node.getRight()), height(node.getLeft())));
     }
 }
