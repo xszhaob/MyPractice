@@ -322,4 +322,19 @@ public class BST<K extends Comparable<K>, V> implements SortST<K, V> {
         }
         return node.getCount();
     }
+
+    /**
+     * 树的高度，只有一个节点的树，高度是0。
+     * 如果没有结点，高度就是-1。
+     */
+    public int height() {
+        return height(root);
+    }
+
+    public int height(BSTNode<K, V> node) {
+        if (node == null) {
+            return -1;
+        }
+        return 1 + Math.max(height(node.getLeft()), height(node.getRight()));
+    }
 }

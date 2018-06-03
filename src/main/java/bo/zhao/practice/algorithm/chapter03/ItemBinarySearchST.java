@@ -3,7 +3,6 @@ package bo.zhao.practice.algorithm.chapter03;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by zhaobo on 2018/5/17.

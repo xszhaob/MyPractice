@@ -1,5 +1,7 @@
 package bo.zhao.practice.algorithm.chapter03;
 
+import junit.framework.Assert;
+
 /**
  * 文件描述：
  *
@@ -12,5 +14,27 @@ public class BSTTest extends SortSTBaseTest {
     @Override
     protected void initST() {
         st = new BST<>();
+    }
+
+
+    @Override
+    public void testAll() {
+        prepare();
+        BST<String, Integer> bst = (BST<String, Integer>) st;
+        Assert.assertEquals(bst.height(), 5);
+        testSize();
+        testKeys();
+        testGet();
+        testContains();
+        testRank();
+        testSelect();
+        testMin();
+        testMax();
+        testFloor();
+        testCeiling();
+        testDeleteMin();
+        testDeleteMax();
+        testDelete();
+        Assert.assertEquals(bst.height(), -1);
     }
 }
