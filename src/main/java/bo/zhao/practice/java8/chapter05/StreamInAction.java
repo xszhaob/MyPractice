@@ -1,4 +1,4 @@
-package bo.zhao.practice.java8.chapter04;
+package bo.zhao.practice.java8.chapter05;
 
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * @version 3.0
  * @since 18/6/5
  */
-public class StreamInAction {
+public class StreamInAction extends BaseAction {
 
 
     @Test
@@ -75,16 +75,5 @@ public class StreamInAction {
         mockMenu().stream().filter(d -> d.getCalories() > 300).skip(3).forEach(System.out::println);
     }
 
-    private List<Dish> mockMenu() {
-        return Arrays.asList(
-                new Dish("pork", false, 800, Dish.Type.MEAT),
-                new Dish("beef", false, 700, Dish.Type.MEAT),
-                new Dish("chicken", false, 400, Dish.Type.MEAT),
-                new Dish("french fries", true, 530, Dish.Type.OTHER),
-                new Dish("rice", true, 350, Dish.Type.OTHER),
-                new Dish("season fruit", true, 120, Dish.Type.OTHER),
-                new Dish("pizza", true, 550, Dish.Type.OTHER),
-                new Dish("prawns", false, 300, Dish.Type.FISH),
-                new Dish("salmon", false, 450, Dish.Type.FISH));
-    }
+
 }

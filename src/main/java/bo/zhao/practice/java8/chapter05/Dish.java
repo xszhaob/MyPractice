@@ -1,4 +1,4 @@
-package bo.zhao.practice.java8.chapter04;
+package bo.zhao.practice.java8.chapter05;
 
 /**
  * 文件描述：
