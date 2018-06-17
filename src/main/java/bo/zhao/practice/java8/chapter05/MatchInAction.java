@@ -1,5 +1,6 @@
 package bo.zhao.practice.java8.chapter05;
 
+import bo.zhao.practice.java8.BaseAction;
 import junit.framework.Assert;
 import org.junit.Test;
 
