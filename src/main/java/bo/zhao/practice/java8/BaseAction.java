@@ -4,6 +4,7 @@ import bo.zhao.practice.java8.chapter05.Dish;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhaobo on 2018/6/9.
@@ -21,5 +22,15 @@ public class BaseAction {
         dishes.add(new Dish("prawns", false, 300, Dish.Type.FISH));
         dishes.add(new Dish("salmon", false, 450, Dish.Type.FISH));
         return dishes;
+    }
+
+    protected void show(Map<?, ?> map) {
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + " --- " + entry.getValue());
+        }
+    }
+
+    protected <T> void show(List<T> list) {
+        list.forEach(System.out::println);
     }
 }
