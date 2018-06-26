@@ -4,6 +4,7 @@ import bo.zhao.practice.java8.BaseAction;
 import bo.zhao.practice.java8.chapter05.Dish;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,9 @@ public class MyCollectorInAction extends BaseAction {
     }
 
     private void toListCollector() {
-        List<String> collect = mockMenu().stream().map(Dish::getName).collect(new ToListCollector<>());
+        List<String> collect = mockMenu().stream().map(Dish::getName).collect(
+                ArrayList::new, List::add, List::addAll
+        );
         show(collect);
     }
 }

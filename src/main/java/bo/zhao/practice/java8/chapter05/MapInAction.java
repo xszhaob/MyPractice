@@ -19,12 +19,12 @@ public class MapInAction extends BaseAction {
 //        testMap1();
 //        testMap2();
 //        testMap3();
-//        testFlatMap1();
+        testFlatMap1();
 //        testFlatMap2();
 //        testIntStreamRange();
 //        testIntStreamRangeClosed();
 //        testPythagoreanTriples();
-        testQ();
+//        testQ();
     }
 
     private void testMap1() {

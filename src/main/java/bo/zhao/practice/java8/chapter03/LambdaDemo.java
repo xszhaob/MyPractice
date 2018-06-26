@@ -91,11 +91,16 @@ public class LambdaDemo {
         // 类似于g(f(x))，4 * (2 + 1)
         System.out.println(f.andThen(g).apply(1));
         // 类似于f(g(x))，2 + (4 * 1)
-        System.out.println(f.compose(g).apply(1));
+        System.out.println(f.compose(g).compose(f).apply(1));
     }
 
     private void sort(List<Apple> inventory) {
         inventory.sort(new AppleComparator());
+    }
+
+    private void sortAndRevose() {
+        List<Apple> apples = AppleMocker.createApples();
+        apples.sort(Comparator.comparing(Apple::getWeight).reversed());
     }
 
 

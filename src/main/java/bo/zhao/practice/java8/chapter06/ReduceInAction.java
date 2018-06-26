@@ -75,7 +75,9 @@ public class ReduceInAction extends BaseAction {
      * 第三个参数是一个BinaryOperator，将两个项目累积成一个同类型的值。这里它就是对两个int求和。
      */
     private void totalCalories() {
-        Integer totalCalories = mockMenu().stream().collect(Collectors.reducing(0, Dish::getCalories, (i, j) -> i + j));
+        Integer totalCalories = mockMenu()
+                .stream()
+                .collect(Collectors.reducing(0, Dish::getCalories, (i, j) -> i + j));
         System.out.println("total calories " + totalCalories);
     }
 
