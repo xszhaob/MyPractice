@@ -43,8 +43,10 @@ public class Shop {
         return shopName;
     }
 
-    public double getPrice(String product) {
-        return calculatePrice(product);
+    public String getPrice(String product) {
+        double price = calculatePrice(product);
+        Discount.Code code = Discount.Code.values()[random.nextInt(Discount.Code.values().length)];
+        return String.format("%s:%.2f:%s", getShopName(), price, code);
     }
 
     private double calculatePrice(String product) {
