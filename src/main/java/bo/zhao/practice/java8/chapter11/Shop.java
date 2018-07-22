@@ -2,7 +2,6 @@ package bo.zhao.practice.java8.chapter11;
 
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Consumer;
 
 /**
  * 文件描述：
