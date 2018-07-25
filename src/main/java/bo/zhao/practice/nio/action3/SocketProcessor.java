@@ -1,5 +1,8 @@
 package bo.zhao.practice.nio.action3;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 /**
@@ -12,8 +15,13 @@ import java.util.Queue;
 public class SocketProcessor implements Runnable {
 
     private Queue<Socket> inboundSocketQueue = null;
+    private Queue<Socket> outboundSocketQueue = new LinkedList<>();
 
-    private MessageBuffer messageBuffer = null;
+    private MessageBuffer readMessageBuffer = null;
+    private MessageBuffer writeMessageBuffer = null;
+
+    private IMessageReaderFactory iMessageReaderFactory = null;
+    private Map<Long, Socket> socketMap = new HashMap<>();
 
 
     @Override
