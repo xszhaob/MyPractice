@@ -45,7 +45,15 @@ public class ParallelInAction {
         return fastest;
     }
 
-
+    /**
+     * 这相当令人失望，求和方法的并行版本比顺序版本要慢很多。
+     * 你如何解释这个意外的结果呢？这里实际上有两个问题：
+     * 1)iterate生成的是装箱的对象，必须拆箱成数字才能求和；
+     * 2)我们很难把iterate分成多个独立块来并行执行。
+     * 第二个问题更有意思一点，因为你必须意识到某些流操作比其他操作更容易并行化。
+     * 具体来说，iterate很难分割成能够独立执行的小块，
+     * 因为每次应用这个函数都要依赖前一次应用的结果。
+     */
     private static long sequentialSum(long n) {
         return Stream.iterate(1L, i -> i + 1).limit(n).reduce(0L, Long::sum);
     }
