@@ -1,5 +1,8 @@
 package bo.zhao.practice.nio.action3;
 
+import java.nio.ByteBuffer;
+import java.util.List;
+
 /**
  * 文件描述：
  *
@@ -8,4 +11,10 @@ package bo.zhao.practice.nio.action3;
  * @since 18/7/24
  */
 public interface IMessageReader {
+
+    void init(MessageBuffer readMessageBuffer);
+
+    void read(Socket socket, ByteBuffer byteBuffer);
+
+    List<Message> getMessages();
 }

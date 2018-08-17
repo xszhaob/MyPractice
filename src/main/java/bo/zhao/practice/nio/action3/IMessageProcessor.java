@@ -9,5 +9,5 @@ package bo.zhao.practice.nio.action3;
  */
 public interface IMessageProcessor {
 
-    void process();
+    void process(Message message, WriteProxy writeProxy);
 }

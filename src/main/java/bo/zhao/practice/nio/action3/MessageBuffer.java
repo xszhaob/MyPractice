@@ -8,4 +8,10 @@ package bo.zhao.practice.nio.action3;
  * @since 18/7/24
  */
 public class MessageBuffer {
+
+
+    public boolean expandMessage(Message message) {
+
+        return false;
+    }
 }

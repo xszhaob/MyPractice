@@ -56,4 +56,56 @@ public class Socket {
 
         return totalBytesWrite;
     }
+
+
+    public long getSocketId() {
+        return socketId;
+    }
+
+    public void setSocketId(long socketId) {
+        this.socketId = socketId;
+    }
+
+    public SocketChannel getSocketChannel() {
+        return socketChannel;
+    }
+
+    public void setSocketChannel(SocketChannel socketChannel) {
+        this.socketChannel = socketChannel;
+    }
+
+    public IMessageReader getMessageReader() {
+        return messageReader;
+    }
+
+    public void setMessageReader(IMessageReader messageReader) {
+        this.messageReader = messageReader;
+    }
+
+    public MessageWriter getMessageWriter() {
+        return messageWriter;
+    }
+
+    public void setMessageWriter(MessageWriter messageWriter) {
+        this.messageWriter = messageWriter;
+    }
+
+    public boolean isEndOfStreamReached() {
+        return endOfStreamReached;
+    }
+
+    public void setEndOfStreamReached(boolean endOfStreamReached) {
+        this.endOfStreamReached = endOfStreamReached;
+    }
+
+    @Override
+    public String toString() {
+        return "Socket{" +
+                "socketId=" + socketId +
+                ", socketChannel=" + socketChannel +
+                ", messageReader=" + messageReader +
+                ", messageWriter=" + messageWriter +
+                ", endOfStreamReached=" + endOfStreamReached +
+                '}';
+    }
 }
