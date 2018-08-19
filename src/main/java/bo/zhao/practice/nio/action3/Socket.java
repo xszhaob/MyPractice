@@ -45,7 +45,7 @@ public class Socket {
     }
 
 
-    private int write(ByteBuffer byteBuffer) throws IOException {
+    public int write(ByteBuffer byteBuffer) throws IOException {
         int bytesWrite = this.socketChannel.write(byteBuffer);
         int totalBytesWrite = bytesWrite;
 

@@ -29,6 +29,7 @@ public class SocketAccepter implements Runnable {
     public void run() {
 
         try {
+            // 打开一个sock通道并并绑定了对应的地址上
             serverSocketChannel = ServerSocketChannel.open();
             serverSocketChannel.bind(new InetSocketAddress(port));
         } catch (IOException e) {
@@ -39,6 +40,7 @@ public class SocketAccepter implements Runnable {
             try {
                 SocketChannel accept = serverSocketChannel.accept();
                 System.out.println(String.format("socket accept %s", accept.toString()));
+                // 拿到消息以后，
                 socketQueue.add(new Socket(accept));
             } catch (IOException e) {
                 e.printStackTrace();

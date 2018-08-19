@@ -2,6 +2,7 @@ package bo.zhao.practice.nio.action3;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.util.*;
@@ -18,7 +19,6 @@ public class SocketProcessor implements Runnable {
     private long nextSocketId = 16 * 1024;
 
     private Queue<Socket> inboundSocketQueue = null;
-    private Queue<Socket> outboundSocketQueue = new LinkedList<>();
 
     private MessageBuffer readMessageBuffer = null;
     private MessageBuffer writeMessageBuffer = null;
@@ -39,19 +39,39 @@ public class SocketProcessor implements Runnable {
     private Set<Socket> emptyToNonEmptySocket = new HashSet<>();
     private Set<Socket> nonEmptyToEmptySocket = new HashSet<>();
 
+    public SocketProcessor(Queue<Socket> inboundSocketQueue,
+                           MessageBuffer readMessageBuffer,
+                           MessageBuffer writeMessageBuffer,
+                           IMessageReaderFactory iMessageReaderFactory,
+                           IMessageProcessor messageProcessor) throws IOException {
+        this.inboundSocketQueue = inboundSocketQueue;
+
+        this.readMessageBuffer = readMessageBuffer;
+        this.writeMessageBuffer = writeMessageBuffer;
+        this.writeProxy = new WriteProxy(writeMessageBuffer, this.outboundMessageQueue);
+
+        this.iMessageReaderFactory = iMessageReaderFactory;
+
+        this.messageProcessor = messageProcessor;
+
+        this.readSelector = Selector.open();
+        this.writeSelector = Selector.open();
+    }
 
     @Override
     public void run() {
-        try {
-            executeCycle();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        while (true) {
+            try {
+                executeCycle();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -61,7 +81,6 @@ public class SocketProcessor implements Runnable {
         takeNewSockets();
         // 从socket中读取数据
         readFromSockets();
-        // write to sockets
         writeToSockets();
     }
 
@@ -131,25 +150,67 @@ public class SocketProcessor implements Runnable {
     }
 
 
-    private void writeToSockets() {
+    private void writeToSockets() throws IOException {
         takeNewOutboundMessages();
+
+        cancelEmptySockets();
+
+        registerNonEmptySockets();
+
+        int writeReady = this.writeSelector.selectNow();
+        if (writeReady > 0) {
+            Set<SelectionKey> selectionKeys = this.writeSelector.selectedKeys();
+            Iterator<SelectionKey> iterator = selectionKeys.iterator();
+
+            while (iterator.hasNext()) {
+                SelectionKey key = iterator.next();
+
+                Socket socket = (Socket) key.attachment();
+                socket.getMessageWriter().write(socket, this.writByteBuffer);
+
+                if (socket.getMessageWriter().isEmpty()) {
+                    this.nonEmptyToEmptySocket.add(socket);
+                }
+                iterator.remove();
+            }
+            selectionKeys.clear();
+        }
     }
 
     private void takeNewOutboundMessages() {
-        Message message = this.outboundMessageQueue.poll();
+        Message outMessage = this.outboundMessageQueue.poll();
 
-        while (message != null) {
-            Socket socket = this.socketMap.get(message.getSocketId());
+        while (outMessage != null) {
+            Socket socket = this.socketMap.get(outMessage.getSocketId());
 
             if (socket != null) {
                 MessageWriter messageWriter = socket.getMessageWriter();
                 if (messageWriter.isEmpty()) {
-
+                    messageWriter.enqueue(outMessage);
+                    nonEmptyToEmptySocket.remove(socket);
+                    emptyToNonEmptySocket.add(socket);
+                } else {
+                    messageWriter.enqueue(outMessage);
                 }
             }
+
+            outMessage = this.outboundMessageQueue.poll();
         }
+    }
 
+    private void cancelEmptySockets() {
+        for (Socket socket : nonEmptyToEmptySocket) {
+            SelectionKey key = socket.getSocketChannel().keyFor(this.writeSelector);
+            key.channel();
+        }
+        nonEmptyToEmptySocket.clear();
+    }
 
+    private void registerNonEmptySockets() throws ClosedChannelException {
+        for (Socket socket : emptyToNonEmptySocket) {
+            socket.getSocketChannel().register(this.writeSelector, SelectionKey.OP_WRITE, socket);
+        }
+        emptyToNonEmptySocket.clear();
     }
 
     private long generateNextSocketId() {

@@ -46,11 +46,20 @@ public class MessageWriter {
 
         byteBuffer.flip();
 
-        this.byteWritted += socket
+        this.byteWritted += socket.write(byteBuffer);
+        byteBuffer.clear();
+
+        if (byteWritted >= this.messageInProcess.getLength()) {
+            if (this.writeQueue.size() > 0) {
+                this.messageInProcess = this.writeQueue.remove(0);
+            } else {
+                this.messageInProcess = null;
+            }
+        }
     }
 
 
-        public boolean isEmpty() {
-        return true;
+    public boolean isEmpty() {
+        return this.messageInProcess == null && this.writeQueue.isEmpty();
     }
 }

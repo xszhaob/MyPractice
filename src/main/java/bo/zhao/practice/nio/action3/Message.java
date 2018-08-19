@@ -25,7 +25,7 @@ public class Message {
         this.messageBuffer = messageBuffer;
     }
 
-    public int writToMessage(ByteBuffer byteBuffer) {
+    public int writeToMessage(ByteBuffer byteBuffer) {
         int remaining = byteBuffer.remaining();
 
         // 数据长度 + 剩余长度 > 容量限制
@@ -42,6 +42,39 @@ public class Message {
         return byteToCopy;
     }
 
+    public int writeToMessage(byte[] byteArray) {
+        return writeToMessage(byteArray, 0, byteArray.length);
+    }
+
+    public int writeToMessage(byte[] byteArray, int offset, int length) {
+        int remaining = length;
+
+        while (this.length + remaining > capacity) {
+            if (!this.messageBuffer.expandMessage(this)) {
+                return -1;
+            }
+        }
+
+        int byteToCopy = Math.min(remaining, this.capacity - this.length);
+        System.arraycopy(byteArray, offset, this.sharedArray, this.offset + this.length, byteToCopy);
+        this.length += byteToCopy;
+        return byteToCopy;
+    }
+
+    /**
+     * @param message
+     * @param endIndex
+     */
+    public void writePartialMessageToMessage(Message message, int endIndex) {
+        int startIndexOfPartialMessage = message.offset + endIndex;
+        int lengthOfPartialMessage = (message.offset + message.length) - endIndex;
+
+        System.arraycopy(message.sharedArray,
+                startIndexOfPartialMessage,
+                this.sharedArray,
+                this.offset,
+                lengthOfPartialMessage);
+    }
 
     public MessageBuffer getMessageBuffer() {
         return messageBuffer;

@@ -1,5 +1,7 @@
 package bo.zhao.practice.nio.action3;
 
+import java.util.Queue;
+
 /**
  * 文件描述：
  *
@@ -9,5 +11,20 @@ package bo.zhao.practice.nio.action3;
  */
 public class WriteProxy {
 
+    private MessageBuffer messageBuffer;
 
+    private Queue<Message> writeQueue;
+
+    public WriteProxy(MessageBuffer messageBuffer, Queue<Message> writeQueue) {
+        this.messageBuffer = messageBuffer;
+        this.writeQueue = writeQueue;
+    }
+
+    public Message getMessage() {
+        return messageBuffer.getMessage();
+    }
+
+    public void enqueue(Message message) {
+        writeQueue.offer(message);
+    }
 }
