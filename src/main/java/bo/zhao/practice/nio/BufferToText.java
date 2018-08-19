@@ -1,5 +1,6 @@
 package bo.zhao.practice.nio;
 
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,12 +19,17 @@ import java.nio.charset.Charset;
  */
 public class BufferToText {
     public static void main(String[] args) throws IOException {
-        FileChannel fc = new FileOutputStream("C:\\Users\\xszhaobo\\Desktop\\data2.txt").getChannel();
-        fc.write(ByteBuffer.wrap("Some text".getBytes()));
+        String filePath = "C:\\Users\\azhao\\Desktop\\data2.txt";
+        FileChannel fc = new FileOutputStream(filePath).getChannel();
+        ByteBuffer byteBuffer = ByteBuffer.wrap("Some text".getBytes());
+        // 把数据从byteBuffer中读取到文件
+        fc.write(byteBuffer);
         fc.close();
-        fc = new FileInputStream("C:\\Users\\xszhaobo\\Desktop\\data2.txt").getChannel();
+        fc = new FileInputStream(filePath).getChannel();
         ByteBuffer buffer = ByteBuffer.allocate(1024);
+        // 把数据从文件中写入到byteBuffer
         fc.read(buffer);
+        // 更换模式，然后limit=position，position=0，准备从byteBuff中读取数据
         buffer.flip();
         /*
         buffer.asCharBuffer()返回一个CharBuffer对象，直接输出CharBuffer对象则是调用了
@@ -38,7 +44,7 @@ public class BufferToText {
         字符集，它会产生代表字符集名称的字符串。把该字符串传送给CharSet.forName()用以
         产生CharSet对象，可以用它对字符串进行解码。
          */
-        buffer.rewind();
+//        buffer.rewind();
         String encoding = System.getProperty("file.encoding");
         System.out.println("Decode using " + encoding + ": " + Charset.forName(encoding).decode(buffer));
 
@@ -48,10 +54,10 @@ public class BufferToText {
         UTF-16BE可以把文本写入到文件中，当读取时，我们只需把它转换成CharBuffer，
         即可产生所期望的文本。
          */
-        fc = new FileOutputStream("C:\\Users\\xszhaobo\\Desktop\\data2.txt").getChannel();
+        fc = new FileOutputStream(filePath).getChannel();
         fc.write(ByteBuffer.wrap("Some text".getBytes("UTF-16BE")));
         fc.close();
-        fc = new FileInputStream("C:\\Users\\xszhaobo\\Desktop\\data2.txt").getChannel();
+        fc = new FileInputStream(filePath).getChannel();
         buffer.clear();
         fc.read(buffer);
         buffer.flip();
@@ -63,16 +69,16 @@ public class BufferToText {
         但是“Some text”只有9个字符，剩余的内容为0的字节仍
         出现在由它的toString()所产生的CharBuffer的表示中。
          */
-        fc = new FileOutputStream("C:\\Users\\xszhaobo\\Desktop\\data2.txt").getChannel();
+        fc = new FileOutputStream(filePath).getChannel();
         buffer = ByteBuffer.allocate(24);
         buffer.asCharBuffer().put("Some text");
         fc.write(buffer);
         fc.close();
-        fc = new FileInputStream("C:\\Users\\xszhaobo\\Desktop\\data2.txt").getChannel();
+        fc = new FileInputStream(filePath).getChannel();
         buffer.clear();
         fc.read(buffer);
         buffer.flip();
-        System.out.println("********" + buffer.asCharBuffer() + "********");
+        System.out.println("********" + new String(buffer.array()) + "********");
 
     }
 }

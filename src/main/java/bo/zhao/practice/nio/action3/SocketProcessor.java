@@ -92,8 +92,9 @@ public class SocketProcessor implements Runnable {
             newSocket.setSocketId(generateNextSocketId());
             newSocket.getSocketChannel().configureBlocking(false);
 
-            newSocket.setMessageReader(this.iMessageReaderFactory.createMessageReader());
-            newSocket.getMessageReader().init(this.readMessageBuffer);
+            IMessageReader messageReader = this.iMessageReaderFactory.createMessageReader();
+            messageReader.init(this.readMessageBuffer);
+            newSocket.setMessageReader(messageReader);
 
             newSocket.setMessageWriter(new MessageWriter());
 

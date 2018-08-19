@@ -16,13 +16,13 @@ public class MessageBuffer {
     private static final int CAPACITY_MEDIUM = 128 * KB;
     private static final int CAPACITY_LARGE = 1024 * KB;
 
-    byte[] smallMessageBuffer = new byte[1024 * 4 * KB];
-    byte[] mediumMessageBuffer = new byte[128 * 128 * KB];
-    byte[] largeMessageBuffer = new byte[16 * 1 * MB];
+    private byte[] smallMessageBuffer = new byte[1024 * 4 * KB];
+    private byte[] mediumMessageBuffer = new byte[128 * 128 * KB];
+    private byte[] largeMessageBuffer = new byte[16 * 1 * MB];
 
-    QueueIntFlip smallMessageBufferFreeBlocks = new QueueIntFlip(1024);
-    QueueIntFlip mediumMessageBufferFreeBlocks = new QueueIntFlip(128);
-    QueueIntFlip largeMessageBufferFreeBlocks = new QueueIntFlip(16);
+    private QueueIntFlip smallMessageBufferFreeBlocks = new QueueIntFlip(1024);
+    private QueueIntFlip mediumMessageBufferFreeBlocks = new QueueIntFlip(128);
+    private QueueIntFlip largeMessageBufferFreeBlocks = new QueueIntFlip(16);
 
 
     public MessageBuffer() {

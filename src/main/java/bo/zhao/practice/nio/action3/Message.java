@@ -29,6 +29,8 @@ public class Message {
         int remaining = byteBuffer.remaining();
 
         // 数据长度 + 剩余长度 > 容量限制
+        // 如果当前的数据大于现在的容量，就不停的扩容，
+        // 直到扩容的最大，如果扩容到最大也无法满足要求，返回-1
         while (this.length + remaining > capacity) {
             if (!this.messageBuffer.expandMessage(this)) {
                 return -1;
@@ -36,6 +38,11 @@ public class Message {
 
         }
         int byteToCopy = Math.min(remaining, this.capacity - this.length);
+        /*
+        用缓冲区中的字节来填充字节数组，或者字节数组的某个区域，
+        并将当前位置向前移动读入的字节数个位置。如果缓存区不够大，
+        那么就不会读入任何字节，并抛出BufferUnderflowException。
+         */
         byteBuffer.get(this.sharedArray, this.offset + this.length, byteToCopy);
         this.length += byteToCopy;
 

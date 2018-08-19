@@ -7,6 +7,7 @@ import bo.zhao.practice.nio.action3.Socket;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +36,12 @@ public class HttpMessageReader implements IMessageReader {
     @Override
     public void read(Socket socket, ByteBuffer byteBuffer) throws IOException {
         int read = socket.read(byteBuffer);
+        System.out.println("*****************");
+        println(byteBuffer);
+        System.out.println("*****************");
         byteBuffer.flip();
 
+        // 如果当前没有剩余数据，直接返回
         if (byteBuffer.remaining() == 0) {
             byteBuffer.clear();
             return;
@@ -63,5 +68,11 @@ public class HttpMessageReader implements IMessageReader {
     @Override
     public List<Message> getMessages() {
         return this.completeMessages;
+    }
+
+    private void println(ByteBuffer byteBuffer) {
+        byteBuffer.flip();
+        String property = System.getProperty("file.encoding");
+        System.out.println(Charset.forName(property).decode(byteBuffer));
     }
 }
