@@ -18,7 +18,7 @@ public class MessageWriter {
 
     private Message messageInProcess = null;
 
-    private int byteWritted = 0;
+    private int byteWritten = 0;
 
     public MessageWriter() {
     }
@@ -34,22 +34,22 @@ public class MessageWriter {
     public MessageWriter(List<Message> writeQueue, Message messageInProcess, int byteWritted) {
         this.writeQueue = writeQueue;
         this.messageInProcess = messageInProcess;
-        this.byteWritted = byteWritted;
+        this.byteWritten = byteWritted;
     }
 
 
     public void write(Socket socket, ByteBuffer byteBuffer) throws IOException {
 
         byteBuffer.put(this.messageInProcess.getSharedArray(),
-                this.messageInProcess.getOffset() + byteWritted,
-                this.messageInProcess.getLength() - byteWritted);
+                this.messageInProcess.getOffset() + byteWritten,
+                this.messageInProcess.getLength() - byteWritten);
 
         byteBuffer.flip();
 
-        this.byteWritted += socket.write(byteBuffer);
+        this.byteWritten += socket.write(byteBuffer);
         byteBuffer.clear();
 
-        if (byteWritted >= this.messageInProcess.getLength()) {
+        if (byteWritten >= this.messageInProcess.getLength()) {
             if (this.writeQueue.size() > 0) {
                 this.messageInProcess = this.writeQueue.remove(0);
             } else {

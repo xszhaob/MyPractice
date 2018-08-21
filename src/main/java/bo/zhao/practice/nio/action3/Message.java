@@ -26,6 +26,7 @@ public class Message {
     }
 
     public int writeToMessage(ByteBuffer byteBuffer) {
+        // buffer中剩余的数据
         int remaining = byteBuffer.remaining();
 
         // 数据长度 + 剩余长度 > 容量限制

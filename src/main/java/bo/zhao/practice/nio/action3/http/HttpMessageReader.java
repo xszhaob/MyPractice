@@ -39,6 +39,7 @@ public class HttpMessageReader implements IMessageReader {
         System.out.println("*****************");
         println(byteBuffer);
         System.out.println("*****************");
+        // 准备读
         byteBuffer.flip();
 
         // 如果当前没有剩余数据，直接返回

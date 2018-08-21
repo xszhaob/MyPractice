@@ -18,12 +18,15 @@ public class SocketProcessor implements Runnable {
 
     private long nextSocketId = 16 * 1024;
 
-    private Queue<Socket> inboundSocketQueue = null;
+    /**
+     * 和accepter共用的队列，accepter把socket放入队列
+     */
+    private Queue<Socket> inboundSocketQueue;
 
-    private MessageBuffer readMessageBuffer = null;
-    private MessageBuffer writeMessageBuffer = null;
+    private MessageBuffer readMessageBuffer;
+    private MessageBuffer writeMessageBuffer;
 
-    private IMessageReaderFactory iMessageReaderFactory = null;
+    private IMessageReaderFactory iMessageReaderFactory;
     private Map<Long, Socket> socketMap = new HashMap<>();
 
     private ByteBuffer readByteBuffer = ByteBuffer.allocate(1024 * 1024);
@@ -84,7 +87,9 @@ public class SocketProcessor implements Runnable {
         writeToSockets();
     }
 
-
+    /**
+     * 拿到新的sock，然后注册到readSelector里面
+     */
     private void takeNewSockets() throws IOException {
         Socket newSocket = this.inboundSocketQueue.poll();
 
@@ -107,7 +112,9 @@ public class SocketProcessor implements Runnable {
         }
     }
 
-
+    /**
+     * 查看有哪些已经准备好数据的socket
+     */
     private void readFromSockets() throws IOException {
         int readReady = this.readSelector.selectNow();
 

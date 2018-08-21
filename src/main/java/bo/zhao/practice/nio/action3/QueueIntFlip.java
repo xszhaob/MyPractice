@@ -9,14 +9,14 @@ package bo.zhao.practice.nio.action3;
  */
 public class QueueIntFlip {
 
-    public int[] elements = null;
+    private int[] elements;
 
-    public int capacity = 0;
-    public int writePos = 0;
-    public int readPos = 0;
-    public boolean flipped = false;
+    private int capacity;
+    private int writePos = 0;
+    private int readPos = 0;
+    private boolean flipped = false;
 
-    public QueueIntFlip(int capacity) {
+    QueueIntFlip(int capacity) {
         this.capacity = capacity;
         this.elements = new int[capacity];
     }
@@ -47,7 +47,7 @@ public class QueueIntFlip {
         }
     }
 
-    public int take() {
+    int take() {
         if(!flipped){
             if(readPos < writePos){
                 return elements[readPos++];
