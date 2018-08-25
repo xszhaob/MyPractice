@@ -35,10 +35,9 @@ public class HttpMessageReader implements IMessageReader {
 
     @Override
     public void read(Socket socket, ByteBuffer byteBuffer) throws IOException {
-        int read = socket.read(byteBuffer);
-        System.out.println("*****************");
+        // 从socket中把数据读取到byteBuffer中
+        socket.read(byteBuffer);
         println(byteBuffer);
-        System.out.println("*****************");
         // 准备读
         byteBuffer.flip();
 
@@ -48,8 +47,10 @@ public class HttpMessageReader implements IMessageReader {
             return;
         }
 
+        // 把数据从byteBuffer写入到message
         this.nextMessage.writeToMessage(byteBuffer);
 
+        // 解析message中的数据
         int endIndex = HttpUtil.parseHttpRequest(this.nextMessage.getSharedArray(),
                 this.nextMessage.getOffset(),
                 this.nextMessage.getOffset() + this.nextMessage.getLength(),
@@ -58,7 +59,7 @@ public class HttpMessageReader implements IMessageReader {
         if (endIndex != -1) {
             Message message = this.messageBuffer.getMessage();
             message.setMetaData(new HttpHeaders());
-            message.writePartialMessageToMessage(message, endIndex);
+            message.writePartialMessageToMessage(nextMessage, endIndex);
 
             completeMessages.add(nextMessage);
             nextMessage = message;
@@ -72,8 +73,10 @@ public class HttpMessageReader implements IMessageReader {
     }
 
     private void println(ByteBuffer byteBuffer) {
+        System.out.println("*****************");
         byteBuffer.flip();
-        String property = System.getProperty("file.encoding");
-        System.out.println(Charset.forName(property).decode(byteBuffer));
+        String encoding = System.getProperty("file.encoding");
+        System.out.println(Charset.forName(encoding).decode(byteBuffer));
+        System.out.println("*****************");
     }
 }

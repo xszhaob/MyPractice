@@ -133,14 +133,23 @@ public class SocketProcessor implements Runnable {
     }
 
 
+    /**
+     * 从socket中读取数据
+     */
     private void readFromSocket(SelectionKey key) throws IOException {
         Socket socket = (Socket) key.attachment();
 
+        /*
+        把socket的数据读取到byteBuffer中，再把byteBuffer的数据读取到message，
+        最后把message添加到已完成message集合
+         */
         socket.getMessageReader().read(socket, this.readByteBuffer);
 
+        // 从reader中获取已经完成的message
         List<Message> messages = socket.getMessageReader().getMessages();
         if (messages.size() > 0) {
             for (Message message : messages) {
+                // message中表示socketId，然后交给处理类处理
                 message.setSocketId(socket.getSocketId());
                 this.messageProcessor.process(message, writeProxy);
             }
@@ -209,7 +218,7 @@ public class SocketProcessor implements Runnable {
     private void cancelEmptySockets() {
         for (Socket socket : nonEmptyToEmptySocket) {
             SelectionKey key = socket.getSocketChannel().keyFor(this.writeSelector);
-            key.channel();
+            key.cancel();
         }
         nonEmptyToEmptySocket.clear();
     }

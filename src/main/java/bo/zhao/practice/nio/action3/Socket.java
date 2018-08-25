@@ -29,6 +29,7 @@ public class Socket {
 
 
     public int read(ByteBuffer byteBuffer) throws IOException {
+        // Reads a sequence of bytes from this channel into the given buffer.
         int bytesRead = this.socketChannel.read(byteBuffer);
         int totalBytesRead = bytesRead;
 
@@ -37,6 +38,7 @@ public class Socket {
             totalBytesRead += bytesRead;
         }
 
+        // bytesRead等于-1表示管道里的数据已经读完
         if (bytesRead == -1) {
             this.endOfStreamReached = true;
         }
