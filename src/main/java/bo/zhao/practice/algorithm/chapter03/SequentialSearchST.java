@@ -9,7 +9,7 @@ import java.util.Iterator;
  * @version 3.0
  * @since 18/5/9
  */
-public class SequentialSearchST<K extends Comparable<K>, V> implements ST<K, V> {
+public class SequentialSearchST<K, V> implements ST<K, V> {
     private Node<K, V> first;
 
     private int count;
@@ -51,7 +51,7 @@ public class SequentialSearchST<K extends Comparable<K>, V> implements ST<K, V> 
     /**
      * 递归的方式删除节点信息
      */
-    private Node<K,V> delete(Node<K,V> x, K key) {
+    private Node<K, V> delete(Node<K, V> x, K key) {
         if (x == null) {
             return null;
         }
