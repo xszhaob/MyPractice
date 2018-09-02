@@ -9,11 +9,12 @@ import java.util.Iterator;
  * @version 3.0
  * @since 18/2/24
  */
-public class LinkedBag<E> implements Iterable<E> {
+public class LinkedBag<E> implements Bag<E>, Iterable<E> {
 
     private Node first;
     private int n;
 
+    @Override
     public void add(E e) {
         Node tmp = first;
         first = new Node();
@@ -22,10 +23,12 @@ public class LinkedBag<E> implements Iterable<E> {
         n++;
     }
 
+    @Override
     public boolean isEmpty() {
         return n > 0;
     }
 
+    @Override
     public int size() {
         return n;
     }

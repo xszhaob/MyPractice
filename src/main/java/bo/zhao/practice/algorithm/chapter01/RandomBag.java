@@ -46,7 +46,7 @@ public class RandomBag<E> implements Bag<E>, Iterable<E> {
         if (random == null) {
             random = new Random();
         }
-        for (int i = arr.length; i > 1; i--) {
+        for (int i = n; i > 1; i--) {
             swap(arr, i - 1, random.nextInt(i));
         }
     }
@@ -67,6 +67,7 @@ public class RandomBag<E> implements Bag<E>, Iterable<E> {
     private class RandomBagIterator implements Iterator<E> {
         private int index = 0;
         private int count = n;
+
         @Override
         public boolean hasNext() {
             return index < count;
