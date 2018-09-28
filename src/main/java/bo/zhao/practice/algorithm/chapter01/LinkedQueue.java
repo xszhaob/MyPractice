@@ -1,7 +1,5 @@
 package bo.zhao.practice.algorithm.chapter01;
 
-import org.omg.DynamicAny.NameDynAnyPair;
-
 import java.util.Iterator;
 
 /**
@@ -11,7 +9,7 @@ import java.util.Iterator;
  * @version 3.0
  * @since 18/2/24
  */
-public class LinkedQueue<E> implements Queue<E>, Iterable<E> {
+public class LinkedQueue<E> implements Queue<E> {
 
     private Node first;
     private Node last;
@@ -87,6 +85,10 @@ public class LinkedQueue<E> implements Queue<E>, Iterable<E> {
         }
     }
 
+    @Override
+    public String toString() {
+        return string();
+    }
 
     public static void main(String[] args) {
         LinkedQueue<String> queue = new LinkedQueue<>();

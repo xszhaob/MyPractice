@@ -6,7 +6,7 @@ import java.util.Iterator;
  * Created by zhaobo on 2018/2/22.
  */
 @SuppressWarnings("unchecked")
-public class ResizingArrayStack<E> implements Iterable<E> {
+public class ResizingArrayStack<E> implements MyIterable<E> {
 
     private E[] arr = (E[]) new Object[1];
     private int n = 0;
@@ -66,6 +66,10 @@ public class ResizingArrayStack<E> implements Iterable<E> {
         }
     }
 
+    @Override
+    public String toString() {
+        return string();
+    }
 
     public static void main(String[] args) {
         ResizingArrayStack<String> stack = new ResizingArrayStack<String>();

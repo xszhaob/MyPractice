@@ -9,7 +9,7 @@ import java.util.Iterator;
  * @version 3.0
  * @since 18/2/24
  */
-public class LinkedBag<E> implements Bag<E>, Iterable<E> {
+public class LinkedBag<E> implements Bag<E> {
 
     private Node first;
     private int n;
@@ -59,6 +59,11 @@ public class LinkedBag<E> implements Bag<E>, Iterable<E> {
         private E item;
 
         private Node next;
+    }
+
+    @Override
+    public String toString() {
+        return string();
     }
 
 

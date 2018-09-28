@@ -8,9 +8,6 @@ import bo.zhao.practice.algorithm.chapter01.LinkedStack;
  */
 public abstract class Paths {
 
-    public Paths(Graph graph, int v) {
-    }
-
     public abstract boolean hasPathTo(int v);
 
     public abstract Iterable<Integer> pathTo(int v);

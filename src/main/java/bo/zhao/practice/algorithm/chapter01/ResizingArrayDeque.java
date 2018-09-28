@@ -6,7 +6,7 @@ import java.util.Iterator;
  * Created by zhaobo on 2018/2/28.
  */
 @SuppressWarnings("unchecked")
-public class ResizingArrayDeque<E> implements Deque<E>, Iterable<E> {
+public class ResizingArrayDeque<E> implements Deque<E> {
 
     private E[] arr = (E[]) new Object[2];
     private int first, last, n;
@@ -104,18 +104,6 @@ public class ResizingArrayDeque<E> implements Deque<E>, Iterable<E> {
         return new ResizingArrayDequeIterator();
     }
 
-    @Override
-    public String toString() {
-        if (isEmpty()) {
-            return "";
-        }
-        StringBuilder sb = new StringBuilder();
-        for (E e : this) {
-            sb.append(e).append(",");
-        }
-        return sb.substring(0, sb.length() - 1);
-    }
-
     private void resize(int length) {
         E[] newArr = (E[]) new Object[length];
         for (int i = 0; i < n; i++) {
@@ -142,5 +130,10 @@ public class ResizingArrayDeque<E> implements Deque<E>, Iterable<E> {
             count--;
             return item;
         }
+    }
+
+    @Override
+    public String toString() {
+        return string();
     }
 }

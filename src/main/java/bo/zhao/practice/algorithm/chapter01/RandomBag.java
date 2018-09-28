@@ -11,7 +11,7 @@ import java.util.Random;
  * @since 18/3/1
  */
 @SuppressWarnings("unchecked")
-public class RandomBag<E> implements Bag<E>, Iterable<E> {
+public class RandomBag<E> implements Bag<E> {
 
     private E[] arr = (E[]) new Object[2];
     private int n;
@@ -79,5 +79,10 @@ public class RandomBag<E> implements Bag<E>, Iterable<E> {
             index++;
             return e;
         }
+    }
+
+    @Override
+    public String toString() {
+        return string();
     }
 }

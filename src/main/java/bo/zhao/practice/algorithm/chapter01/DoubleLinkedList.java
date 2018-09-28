@@ -9,7 +9,7 @@ import java.util.Iterator;
  * @version 3.0
  * @since 18/2/25
  */
-public class DoubleLinkedList<E> implements Iterable<E> {
+public class DoubleLinkedList<E> implements MyIterable<E> {
 
     private DoubleNode first;
     private DoubleNode last;
@@ -179,12 +179,9 @@ public class DoubleLinkedList<E> implements Iterable<E> {
     }
 
 
+    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (E e : this) {
-            sb.append(e).append(" ");
-        }
-        return sb.toString();
+        return string();
     }
 
     public String toReversedString() {

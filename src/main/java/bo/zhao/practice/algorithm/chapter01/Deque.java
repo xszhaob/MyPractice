@@ -3,7 +3,7 @@ package bo.zhao.practice.algorithm.chapter01;
 /**
  * Created by zhaobo on 2018/2/28.
  */
-public interface Deque<E> {
+public interface Deque<E> extends MyIterable<E> {
 
     int size();
 

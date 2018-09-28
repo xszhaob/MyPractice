@@ -7,7 +7,7 @@ package bo.zhao.practice.algorithm.chapter01;
  * @version 3.0
  * @since 18/2/24
  */
-public interface Queue<E> {
+public interface Queue<E> extends MyIterable<E> {
 
     /**
      * 添加一个元素

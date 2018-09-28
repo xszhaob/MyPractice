@@ -12,7 +12,6 @@ public class DepthFirstPaths extends Paths {
 
 
     public DepthFirstPaths(Graph graph, int s) {
-        super(graph, s);
         edgeTo = new int[graph.vCount()];
         marked = new boolean[graph.vCount()];
         this.s = s;

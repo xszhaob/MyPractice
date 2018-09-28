@@ -1,6 +1,7 @@
 package bo.zhao.practice.algorithm.chapter04;
 
 import bo.zhao.practice.algorithm.chapter01.LinkedBag;
+import bo.zhao.practice.algorithm.chapter01.LinkedStack;
 
 import java.util.List;
 
@@ -39,6 +40,21 @@ public class Graph {
         }
     }
 
+    public Graph(Graph graph) {
+        this(graph.vCount);
+        this.eCount = graph.eCount;
+        for (int v = 0; v < graph.vCount; v++) {
+            LinkedStack<Integer> reverse = new LinkedStack<>();
+            // 以栈的形式先拿出来，再写入当前的Graph
+            for (Integer w : graph.adj(v)) {
+                reverse.push(w);
+            }
+            for (Integer w : reverse) {
+                this.adj(v).add(w);
+            }
+        }
+    }
+
     /**
      * 顶点的数量
      */
@@ -65,7 +81,7 @@ public class Graph {
     /**
      * 和v相邻的所有顶点
      */
-    public Iterable<Integer> adj(int v) {
+    public LinkedBag<Integer> adj(int v) {
         return adj[v];
     }
 

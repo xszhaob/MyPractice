@@ -11,7 +11,7 @@ import java.util.Random;
  * @since 18/3/2
  */
 @SuppressWarnings("unchecked")
-public class RandomQueue<E> implements Iterable<E> {
+public class RandomQueue<E> implements MyIterable<E> {
 
     private E[] arr = (E[]) new Object[2];
     private int n;
@@ -66,6 +66,11 @@ public class RandomQueue<E> implements Iterable<E> {
         E[] tmp = (E[]) new Object[length];
         System.arraycopy(arr, 0, tmp, 0, arr.length);
         arr = tmp;
+    }
+
+    @Override
+    public String toString() {
+        return string();
     }
 
     public static void main(String[] args) {

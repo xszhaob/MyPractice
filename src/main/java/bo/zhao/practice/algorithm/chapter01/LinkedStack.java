@@ -5,19 +5,22 @@ import java.util.Iterator;
 /**
  * Created by zhaobo on 2018/2/22.
  */
-public class LinkedStack<E> implements Iterable<E> {
+public class LinkedStack<E> implements Stack<E> {
 
     private Node first;
     private int n;
 
+    @Override
     public boolean isEmpty() {
         return n == 0;
     }
 
+    @Override
     public int size() {
         return n;
     }
 
+    @Override
     public void push(E e) {
         Node oldFirst = first;
         first = new Node();
@@ -26,6 +29,7 @@ public class LinkedStack<E> implements Iterable<E> {
         n++;
     }
 
+    @Override
     public E pop() {
         E e = first.item;
         first = first.next;
@@ -33,6 +37,7 @@ public class LinkedStack<E> implements Iterable<E> {
         return e;
     }
 
+    @Override
     public E peek() {
         Node f = first;
         return f == null ? null : f.item;
@@ -69,6 +74,11 @@ public class LinkedStack<E> implements Iterable<E> {
         public void remove() {
 
         }
+    }
+
+    @Override
+    public String toString() {
+        return string();
     }
 
 

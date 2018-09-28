@@ -7,7 +7,7 @@ package bo.zhao.practice.algorithm.chapter01;
  * @version 3.0
  * @since 18/3/1
  */
-public interface Bag<E> {
+public interface Bag<E> extends MyIterable<E> {
     boolean isEmpty();
 
     int size();
