@@ -22,6 +22,10 @@ public class Topological {
         System.out.println(dfs.reversePost());
     }
 
+    public Topological(EdgeWeightedDigraph digraph) {
+        DirectedCycle cycle = new DirectedCycle(digraph);
+    }
+
     public Iterable<Integer> order() {
         return order;
     }

@@ -72,7 +72,7 @@ public class Graph {
     /**
      * 向图中添加一条边v-w
      */
-    private void addEdge(int v, int w) {
+    public void addEdge(int v, int w) {
         adj[v].add(w);
         adj[w].add(v);
         eCount++;
