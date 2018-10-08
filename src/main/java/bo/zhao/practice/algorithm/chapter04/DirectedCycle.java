@@ -26,11 +26,45 @@ public class DirectedCycle {
         }
     }
 
+    public DirectedCycle(EdgeWeightedDigraph digraph) {
+        onStack = new boolean[digraph.vCount()];
+        marked = new boolean[digraph.vCount()];
+        edgeTo = new int[digraph.vCount()];
+        for (int v = 0; v < digraph.vCount(); v++) {
+            if (!marked[v]) {
+                dfs(digraph, v);
+            }
+        }
+    }
+
     private void dfs(Digraph digraph, int v) {
         onStack[v] = true;
         marked[v] = true;
 
         for (Integer w : digraph.adj(v)) {
+            if (hasCycle()) {
+                return;
+            } else if (!marked[w]) {
+                edgeTo[w] = v;
+                dfs(digraph, w);
+            } else if (onStack[w]) {
+                cycle = new LinkedStack<>();
+                for (int x = v; x != w; x = edgeTo[x]) {
+                    cycle.push(x);
+                }
+                cycle.push(w);
+                cycle.push(v);
+            }
+        }
+        onStack[v] = false;
+    }
+
+    private void dfs(EdgeWeightedDigraph digraph, int v) {
+        onStack[v] = true;
+        marked[v] = true;
+
+        for (DirectedEdge edge : digraph.adj(v)) {
+            int w = edge.to();
             if (hasCycle()) {
                 return;
             } else if (!marked[w]) {

@@ -13,39 +13,38 @@ public class MergeTwoLists {
      * 使用链表循环的方式解决
      */
     private static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-
         if (l1 == null) {
             return l2;
         }
+
         if (l2 == null) {
             return l1;
         }
 
-        ListNode head = new ListNode(0);
-        head.next = l1;
+        ListNode beforeHead = new ListNode(0);
+        ListNode current = beforeHead;
 
-        ListNode beforeCurrent = head;
-        ListNode current = beforeCurrent.next;
-        while (l2 != null) {
-            while (current != null) {
-                if (current.val > l2.val) {
-                    beforeCurrent.next = new ListNode(l2.val);
-                    beforeCurrent.next.next = current;
-
-                    beforeCurrent = beforeCurrent.next;
-                    break;
-                }
-                beforeCurrent = current;
-                current = current.next;
+        ListNode node1 = l1;
+        ListNode node2 = l2;
+        while (true) {
+            if (node1 == null) {
+                current.next = node2;
+                break;
             }
-            // node2的值不大于node1最后一个节点
-            if (current == null && beforeCurrent.val <= l2.val) {
-                beforeCurrent.next = new ListNode(l2.val);
-                current = beforeCurrent.next;
+            if (node2 == null) {
+                current.next = node1;
+                break;
             }
-            l2 = l2.next;
+            if (node1.val >= node2.val) {
+                current.next = node2;
+                node2 = node2.next;
+            } else {
+                current.next = node1;
+                node1 = node1.next;
+            }
+            current = current.next;
         }
-        return head.next;
+        return beforeHead.next;
     }
 
     /**
